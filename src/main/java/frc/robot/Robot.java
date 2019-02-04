@@ -58,6 +58,9 @@ public class Robot extends TimedRobot {
     mDrive.setExpiration(0.1);
     mDrive.setSafetyEnabled(true);
 
+    // TEST ROBOT OFF GROUND TO TEST INVERTED OR not
+    // TO INVERT: motor.setInverted(true)
+
     //alt method:
     //mDrive.driveCartesian((controller.getRawAxis(0) * -.5), (controller.getRawAxis(1) * .5), (controller.getRawAxis(4) * -.5));
   }

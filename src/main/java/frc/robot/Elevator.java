@@ -31,13 +31,13 @@ public class Elevator {
         //scan for bumpers being pressed to drive the motors
         //scan for bumpers not being pressed to stop the motors
         if (rightBumperPressed == true) {
-          emotor2.set(ControlMode.Percentoutput, 0.5);
+          emotor2.set(ControlMode.PercentOutput, 0.5);
         } else if (rightBumperPressed == false) {
-          emotor2.set(ControlMode.Percentoutput, 0);
+          emotor2.set(ControlMode.PercentOutput, 0);
         } else if (leftBumperPressed == true) {
-          emotor2.set(ControlMode.Percentoutput, -0.5);
+          emotor2.set(ControlMode.PercentOutput, -0.5);
         } (else if leftBumperPressed == false) {
-          emotor2.set(ControlMode.Percentoutput, 0);
+          emotor2.set(ControlMode.PercentOutput, 0);
         }
     }
 }
