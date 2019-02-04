@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.wpi.first.wpilibj.XboxController;
 import com.wpi.first.wpilibj.GenericHID;
 
-
 public class Elevator {
     //define speedcontrollers for victors
     public static SpeedController emotor1 = new WPI_VictorSPX(5);
@@ -21,23 +20,24 @@ public class Elevator {
         //set the second motor to follow the first motor so they both perform the same action
         emotor2.follow(emotor1);
 
+        //make sure the motors don't spin too fast
+        emotor1.setMaxOutput(0.5);
+        emotor2.setMaxOutput(0.5);
+
         //get and set the boolean values for if the bumpers are pressed or not
-        rightBumperPressed = getBumperPressed(GenericHID.righthand);
-        leftBumperPressed = getBumperPressed(GenericHID.leftHand);
-        rightBumperReleased = getBumperReleased(GenericHID.rightHand);
-        rightBumperReleased = getBumperReleased(GenericHID.leftHand);
-        public boolean rightBumperPressed, leftBumperPressed;
-        public boolean rightBumperReleased, leftBumperReleased;
+        public boolean rightBumperPressed = getBumperPressed(GenericHID.righthand);
+        public boolean leftBumperPressed = getBumperPressed(GenericHID.leftHand);
 
-        //set up conditionals to drive the motors up or down
-        if rightBumperPressed = true
+        //scan for bumpers being pressed to drive the motors
+        //scan for bumpers not being pressed to stop the motors
+        if (rightBumperPressed == true) {
           emotor2.set(ControlMode.Percentoutput, 0.5);
-        if rightBumperReleased = true
+        } else if (rightBumperPressed == false) {
           emotor2.set(ControlMode.Percentoutput, 0);
-        if leftBumperPressed = true
+        } else if (leftBumperPressed == true) {
           emotor2.set(ControlMode.Percentoutput, -0.5);
-        if leftBumperReleased = true
+        } (else if leftBumperPressed == false) {
           emotor2.set(ControlMode.Percentoutput, 0);
-
+        }
     }
 }
