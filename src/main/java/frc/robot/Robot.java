@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Robot extends TimedRobot {
-  
+
   //define numbers of talons
   public static int frontLeftnum = 2;
   public static int rearLeftnum = 1;
@@ -29,14 +29,14 @@ public class Robot extends TimedRobot {
   public static SpeedController rearLeft = new WPI_TalonSRX(rearLeftnum);
   public static SpeedController frontRight = new WPI_TalonSRX(frontRightnum);
   public static SpeedController rearRight = new WPI_TalonSRX(rearRightnum);
-  
+
   //create mecanum drive
   public static MecanumDrive mDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
-  
+
   //define xbox controller for use with mecanum drive
   public static XboxController controller = new XboxController(0);
-  Hand leftHand = GenericHID.Hand.kLeft;
-  Hand rightHand = GenericHID.Hand.kRight;
+  public Hand leftHand = GenericHID.Hand.kLeft;
+  public Hand rightHand = GenericHID.Hand.kRight;
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
@@ -51,17 +51,17 @@ public class Robot extends TimedRobot {
   //run periodically when the operator is in control:
   @Override
 	public void teleopPeriodic() {
-    
+
     //create drivetrain with controller inputs and set safety
     mDrive.driveCartesian((controller.getRawAxis(0)), (controller.getRawAxis(1)), (controller.getRawAxis(4)));
     mDrive.setMaxOutput(0.5);
     mDrive.setExpiration(0.1);
     mDrive.setSafetyEnabled(true);
-    
+
     //alt method:
     //mDrive.driveCartesian((controller.getRawAxis(0) * -.5), (controller.getRawAxis(1) * .5), (controller.getRawAxis(4) * -.5));
   }
- 
+
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
