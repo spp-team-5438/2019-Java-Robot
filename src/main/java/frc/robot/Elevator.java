@@ -17,7 +17,7 @@ public class Elevator {
   public static WPI_VictorSPX emotor1 = new WPI_VictorSPX(5);
   public static WPI_VictorSPX emotor2 = new WPI_VictorSPX(6);
 
-  //define controller and hands cuz for some reason the PUBLIC VARIBLE ISNT ACTUALLY PUBLIC???
+  //define controller and hands
   public static XboxController controller = new XboxController(0);
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;

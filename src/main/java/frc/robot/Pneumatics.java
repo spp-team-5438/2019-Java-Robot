@@ -19,7 +19,7 @@ public class Pneumatics {
     DoubleSolenoid eRight = new DoubleSolenoid(2, 3);
     Compressor compressor = new Compressor();
 
-    //define controller again cuz wtf
+    //define controller
     XboxController controller = new XboxController(0);
 
     public void teleopPeriodic() {

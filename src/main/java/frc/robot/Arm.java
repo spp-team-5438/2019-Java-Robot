@@ -17,15 +17,22 @@ public class Arm {
     //define Victor and set PWM channel
     VictorSP armMotor = new VictorSP(0);
 
+    //define controller and hands
     XboxController controller = new XboxController(0);
     public Hand leftHand = GenericHID.Hand.kLeft;
     public Hand rightHand = GenericHID.Hand.kRight;
 
     public void teleopPeriodic() {
 
+        //get values of triggers for use
         double leftTriggerValue = controller.getTriggerAxis(leftHand);
         double rightTriggerValue = controller.getTriggerAxis(rightHand);
+        
+        //set motors safety
+        armMotor.setSafetyEnabled(true);
+        armMotor.setExpiration(0.1);
 
+        //if right trigger is pressed spin one way, if left is pressed spin other way
         if (rightTriggerValue > 0) {
         armMotor.set(rightTriggerValue);
         }
