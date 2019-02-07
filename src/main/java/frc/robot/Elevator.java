@@ -8,33 +8,39 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Elevator {
-    //define speedcontrollers for victors
-    public static WPI_VictorSPX emotor1 = new WPI_VictorSPX(5);
-    public static WPI_VictorSPX emotor2 = new WPI_VictorSPX(6);
+  //define speedcontrollers for victors
+  public static WPI_VictorSPX emotor1 = new WPI_VictorSPX(5);
+  public static WPI_VictorSPX emotor2 = new WPI_VictorSPX(6);
+
+  //define controller and hands cuz for some reason the PUBLIC VARIBLE ISNT ACTUALLY PUBLIC???
+  public static XboxController controller = new XboxController(0);
+  public Hand leftHand = GenericHID.Hand.kLeft;
+  public Hand rightHand = GenericHID.Hand.kRight;
 
     public void teleopPeriodic() {
-        //set the second motor to follow the first motor so they both perform the same action
-        emotor2.follow(emotor1);
+      //set the second motor to follow the first motor so they both perform the same action
+      emotor2.follow(emotor1);
+        
+      //set motor safety
+      emotor1.setSafetyEnabled(true);
+      emotor2.setSafetyEnabled(true);
+      emotor1.setExpiration(0.1);
+      emotor2.setExpiration(0.1);
 
-        //get and set the boolean values for if the bumpers are pressed or not
-        public boolean rightBumperPressed = getBumperPressed(rightHand);
-        public boolean leftBumperPressed = getBumperPressed(leftHand);
-
-        //scan for bumpers being pressed to drive the motors
-        //scan for bumpers not being pressed to stop the motors
-        if (rightBumperPressed = true) {
-          emotor2.set(0.5);
-        } else if (rightBumperPressed = false) {
-          emotor2.set(0);
-        } else if (leftBumperPressed = true) {
-          emotor2.set(-0.5);
-        } else if (leftBumperPressed = false) {
-          emotor2.set(0);
-        }
+      //scan for bumpers being pressed to drive the motors
+      if (controller.getBumperPressed(rightHand)) {
+        emotor2.set(0.5);
+      } 
+      else if (controller.getBumper(leftHand)) {
+        emotor2.set(-0.5);
+      } 
+      else {
+        emotor2.set(0);
+      }
     }
 }

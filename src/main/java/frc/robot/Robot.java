@@ -6,15 +6,12 @@
 /*----------------------------------------------------------------------------*/
 
 package frc.robot;
-import edu.wpi.first.wpilibj.TimedRobot;
 
+import edu.wpi.first.wpilibj.TimedRobot;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
-
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.GenericHID;
-import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Robot extends TimedRobot {
 
@@ -35,8 +32,6 @@ public class Robot extends TimedRobot {
 
   //define xbox controller for use with mecanum drive
   public static XboxController controller = new XboxController(0);
-  public Hand leftHand = GenericHID.Hand.kLeft;
-  public Hand rightHand = GenericHID.Hand.kRight;
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
@@ -51,18 +46,15 @@ public class Robot extends TimedRobot {
   //run periodically when the operator is in control:
   @Override
 	public void teleopPeriodic() {
-
     //create drivetrain with controller inputs and set safety
-    mDrive.driveCartesian((controller.getRawAxis(0)), (controller.getRawAxis(1)), (controller.getRawAxis(4)));
-    mDrive.setMaxOutput(0.5);
-    mDrive.setExpiration(0.1);
+    mDrive.driveCartesian((controller.getRawAxis(0) * -1), (controller.getRawAxis(1) * 1), (controller.getRawAxis(4) * -1));
     mDrive.setSafetyEnabled(true);
-
-    // TEST ROBOT OFF GROUND TO TEST INVERTED OR not
-    // TO INVERT: motor.setInverted(true)
-
-    //alt method:
-    //mDrive.driveCartesian((controller.getRawAxis(0) * -.5), (controller.getRawAxis(1) * .5), (controller.getRawAxis(4) * -.5));
+    mDrive.setExpiration(0.1);
+    
+    //frontLeft.setInverted(true);
+    //frontRight.setInverted(true);
+    //rearLeft.setInverted(true);
+    //rearRight.setInverted(true);
   }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
