@@ -7,7 +7,8 @@ FRC 2019 Deep Space
 - [ ] Test and Finalize Drivetrain
 - [x] Write Elevator Code
 - [ ] Test and Finalize Elevator
-- [ ] Write Pneumatics Code
+- [x] Write Arm Code
+- [x] Write Pneumatics Code
 - [ ] Test and Finalize Pneumatics
 - [x] Write Camera Code (display camera on SmartDashboard)
 
