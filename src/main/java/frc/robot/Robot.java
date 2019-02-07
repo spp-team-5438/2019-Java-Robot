@@ -85,7 +85,11 @@ public class Robot extends TimedRobot {
   //run periodically when the operator is in control:
   @Override
 	public void teleopPeriodic() {
-    mDrive.driveCartesian((controller.getRawAxis(0) * -.5), (controller.getRawAxis(1) * .5), (controller.getRawAxis(4) * -.5));
+    mDrive.driveCartesian((controller.getRawAxis(0) * .7), (controller.getRawAxis(1) * .7), (controller.getRawAxis(4) * -.7));
+    frontLeft.setInverted(true);
+    frontRight.setInverted(true);
+    rearLeft.setInverted(true);
+    rearRight.setInverted(true);
   }
  
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
