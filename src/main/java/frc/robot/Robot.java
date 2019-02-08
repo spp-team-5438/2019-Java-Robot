@@ -33,9 +33,15 @@ public class Robot extends TimedRobot {
   //define xbox controller for use with mecanum drive
   public static XboxController controller = new XboxController(0);
 
+  //define display
+  REVDigitBoard display = new REVDigitBoard();
+
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
+    //clear the display and set it to show 5438
+    display.clear();
+    display.display("5438");
   }
 
   //run when the robot enters operator control:
