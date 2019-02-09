@@ -22,7 +22,7 @@ public class Arm {
     public Hand leftHand = GenericHID.Hand.kLeft;
     public Hand rightHand = GenericHID.Hand.kRight;
 
-    public void teleopPeriodic() {
+    public void main() {
 
         //get values of triggers for use
         double leftTriggerValue = controller.getTriggerAxis(leftHand);

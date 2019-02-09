@@ -12,37 +12,32 @@ import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.XboxController;
 
-public class Pneumatics {
+ public class Pneumatics {
 
     //define solenoids and compressor
-    DoubleSolenoid eLeft = new DoubleSolenoid(0, 1);
-    DoubleSolenoid eRight = new DoubleSolenoid(2, 3);
+    DoubleSolenoid solenoid = new DoubleSolenoid(3, 0);
     Compressor compressor = new Compressor();
 
     //define controller
     XboxController controller = new XboxController(0);
 
-    public void teleopPeriodic() {
+    public void main() {
         //set the compressor mode to turn on when pressure low and vice-versa
         compressor.setClosedLoopControl(true);
         if (compressor.getPressureSwitchValue()); {
-            System.out.println("Pressure Low, Starting Compressor!");
         }
 
         //set the solenoid to extend when A is pressed and retract when X is pressed
         if (controller.getAButtonPressed()) {
-            eLeft.set(Value.kForward);
-            eRight.set(Value.kReverse);
+            solenoid.set(Value.kForward);
             System.out.println("Extending Solenoid!");
         }
         else if (controller.getXButtonPressed()) {
-            eLeft.set(Value.kReverse);
-            eRight.set(Value.kReverse);
+            solenoid.set(Value.kReverse);
             System.out.println("Retracting Solenoid!");
         }
         else {
-            eLeft.set(Value.kOff);
-            eRight.set(Value.kOff);
+            solenoid.set(Value.kOff);
         }
     }
 }

@@ -22,7 +22,7 @@ public class Elevator {
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
 
-    public void teleopPeriodic() {
+    public void main() {
       //set the second motor to follow the first motor so they both perform the same action
       emotor2.follow(emotor1);
         
