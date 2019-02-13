@@ -4,12 +4,12 @@ FRC 2019 Deep Space
 
 # Basic To-Do
 - [x] Write Drivetrain Code
-- [ ] Test and Finalize Drivetrain
+- [x] Test and Finalize Drivetrain
 - [x] Write Elevator Code
 - [ ] Test and Finalize Elevator
 - [x] Write Arm Code
 - [x] Write Pneumatics Code
-- [ ] Test and Finalize Pneumatics
+- [x] Test and Finalize Pneumatics
 - [x] Write Camera Code (display camera on SmartDashboard)
 
 # Complex To-Do
