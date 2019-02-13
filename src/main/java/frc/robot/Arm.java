@@ -34,10 +34,12 @@ public class Arm {
 
         //if right trigger is pressed spin one way, if left is pressed spin other way
         if (rightTriggerValue > 0) {
+        armMotor.setInverted(true);
         armMotor.set(rightTriggerValue);
         }
-        else if (leftTriggerValue < 0) {
-        armMotor.set(-1 * leftTriggerValue);
+        else if (leftTriggerValue > 0) {
+        armMotor.setInverted(false);
+        armMotor.set(leftTriggerValue);
         }
     }
 }

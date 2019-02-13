@@ -34,13 +34,16 @@ public class Elevator {
 
       //scan for bumpers being pressed to drive the motors
       if (controller.getBumperPressed(rightHand)) {
-        emotor2.set(0.5);
+        emotor1.set(1);
       } 
-      else if (controller.getBumper(leftHand)) {
-        emotor2.set(-0.5);
+      else if (controller.getBumperPressed(leftHand)) {
+        emotor1.set(-1);
       } 
-      else {
-        emotor2.set(0);
+      else if (controller.getBumperReleased(rightHand)) {
+        emotor1.set(0);
+      }
+      else if (controller.getBumperReleased(leftHand)) {
+        emotor1.set(0);
       }
     }
 }

@@ -40,6 +40,6 @@ public class Drivetrain {
         mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
         mDrive.setSafetyEnabled(true);
         mDrive.setExpiration(0.1);
-        mDrive.setDeadband(0.1);
+        mDrive.setDeadband(0.25);
     }
 }
