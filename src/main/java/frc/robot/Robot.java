@@ -16,6 +16,7 @@ import frc.robot.Arm;
 import frc.robot.Camera;
 import frc.robot.Elevator;
 import frc.robot.REVDigitBoard;
+import frc.robot.Autonomous;
 
 public class Robot extends TimedRobot {
 
@@ -26,6 +27,7 @@ public class Robot extends TimedRobot {
   Camera camera = new Camera();
   Elevator elevator = new Elevator();
   REVDigitBoard display = new REVDigitBoard();
+  Autonomous auto = new Autonomous();
 
   //define xbox controller
   public static XboxController controller = new XboxController(0);
@@ -60,6 +62,7 @@ public class Robot extends TimedRobot {
   // run periodically when the robot is in autonomous mode:
   @Override
   public void autonomousPeriodic() {
+    auto.init();
   }
 
  // run when the robot is put into disabled mode:

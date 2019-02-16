@@ -14,8 +14,7 @@ import edu.wpi.first.wpilibj.GenericHID.Hand;
 
 public class Elevator {
   //define speedcontrollers for victors
-  public static WPI_VictorSPX emotor1 = new WPI_VictorSPX(5);
-  public static WPI_VictorSPX emotor2 = new WPI_VictorSPX(6);
+  public static WPI_VictorSPX eMotor = new WPI_VictorSPX(5);
 
   //define controller and hands
   public static XboxController controller = new XboxController(0);
@@ -24,26 +23,26 @@ public class Elevator {
 
     public void main() {
       //set the second motor to follow the first motor so they both perform the same action
-      emotor2.follow(emotor1);
-        
+
       //set motor safety
-      emotor1.setSafetyEnabled(true);
-      emotor2.setSafetyEnabled(true);
-      emotor1.setExpiration(0.1);
-      emotor2.setExpiration(0.1);
+      eMotor.setSafetyEnabled(false);
+      eMotor.setExpiration(0.05);
 
       //scan for bumpers being pressed to drive the motors
       if (controller.getBumperPressed(rightHand)) {
-        emotor1.set(1);
+        eMotor.set(1);
       } 
       else if (controller.getBumperPressed(leftHand)) {
-        emotor1.set(-1);
+        eMotor.set(-1);
       } 
       else if (controller.getBumperReleased(rightHand)) {
-        emotor1.set(0);
+        eMotor.set(0);
       }
       else if (controller.getBumperReleased(leftHand)) {
-        emotor1.set(0);
+        eMotor.set(0);
+      }
+      else {
+        eMotor.set(0);
       }
     }
 }

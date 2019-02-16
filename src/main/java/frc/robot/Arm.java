@@ -30,16 +30,19 @@ public class Arm {
         
         //set motors safety
         armMotor.setSafetyEnabled(true);
-        armMotor.setExpiration(0.1);
+        armMotor.setExpiration(0.05);
 
         //if right trigger is pressed spin one way, if left is pressed spin other way
         if (rightTriggerValue > 0) {
-        armMotor.setInverted(true);
-        armMotor.set(rightTriggerValue);
+            armMotor.setInverted(true);
+            armMotor.set(rightTriggerValue);
         }
         else if (leftTriggerValue > 0) {
-        armMotor.setInverted(false);
-        armMotor.set(leftTriggerValue);
+            armMotor.setInverted(false);
+            armMotor.set(leftTriggerValue);
+        }
+        else {
+            armMotor.set(0);
         }
     }
 }

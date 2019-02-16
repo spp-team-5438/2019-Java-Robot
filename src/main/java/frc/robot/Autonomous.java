@@ -7,18 +7,16 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj.XboxController;
-
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 /**
  * Add your docs here.
  */
-public class Drivetrain {
+public class Autonomous {
 
-    //define numbers of talons
     public static int frontLeftnum = 2;
     public static int rearLeftnum = 1;
     public static int frontRightnum = 4;
@@ -30,17 +28,22 @@ public class Drivetrain {
     public static WPI_TalonSRX frontRight = new WPI_TalonSRX(frontRightnum);
     public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
 
-    //create mecanum drive
-    public static MecanumDrive mDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
 
-    //define xbox controller for use with mecanum drive
-    public static XboxController controller = new XboxController(0);
+    public static void displayvalues() {
+    }
 
-    public void main() {
-        //create drivetrain with controller inputs and set safety
-        mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
-        mDrive.setSafetyEnabled(true);
-        mDrive.setExpiration(0.1);
-        mDrive.setDeadband(0.3);
+    public void init() {
+        frontLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+
+        boolean testbool;
+        testbool = true;
+
+        while (testbool) {
+            frontLeft.set(ControlMode.Position, 5000); //doesnt work but should?
+        }
+        
     }
 }
