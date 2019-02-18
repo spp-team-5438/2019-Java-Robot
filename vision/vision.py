@@ -685,7 +685,7 @@ if __name__ == "__main__":
     # start NetworkTables
     ntinst = NetworkTablesInstance.getDefault()
     #Name of network table - this is how it communicates with robot. IMPORTANT
-    networkTable = NetworkTables.getTable('Vision by @samay')
+    networkTable = NetworkTables.getTable('Vision')
 
     if server:
         print("Setting up NetworkTables server")

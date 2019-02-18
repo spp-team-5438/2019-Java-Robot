@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.XboxController;
 
+
 import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
 import frc.robot.Arm;
@@ -17,6 +18,8 @@ import frc.robot.Camera;
 import frc.robot.Elevator;
 import frc.robot.REVDigitBoard;
 import frc.robot.Autonomous;
+import frc.robot.Vision;
+
 
 public class Robot extends TimedRobot {
 
@@ -28,15 +31,15 @@ public class Robot extends TimedRobot {
   Elevator elevator = new Elevator();
   REVDigitBoard display = new REVDigitBoard();
   Autonomous auto = new Autonomous();
+  Vision vision = new Vision();
 
-  //define xbox controller
-  public static XboxController controller = new XboxController(0);
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
     display.display("5438");
     camera.main();
+    
   }
 
   //run when the robot enters operator control:
@@ -47,11 +50,13 @@ public class Robot extends TimedRobot {
   //run periodically when the operator is in control:
   @Override
 	public void teleopPeriodic() {
+
     //call other classes
     mecanumDrivetrain.main();
     pneumatics.main();
     arm.main();
     elevator.main();
+    vision.vision();
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
