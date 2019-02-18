@@ -1,9 +1,9 @@
-# Vision System based on Chicken Vision (https://github.com/team3997/ChickenVision)
-# to-do: make sure software is installed on pi, then calibrate HSV using GRIP, then get data over using networktables
+#!/usr/bin/env python3
 
-import json
-import time
-import sys
+# Vision System based on Chicken Vision (https://github.com/team3997/ChickenVision)
+# to-do: figure out how accurate distance is right now.
+
+import json, time, sys
 from threading import Thread
 
 from cscore import CameraServer, VideoSource
@@ -11,12 +11,8 @@ from networktables import NetworkTablesInstance
 import cv2
 import numpy as np
 from networktables import NetworkTables
-import math
+import math, datetime
 ########### SET RESOLUTION TO 256x144 !!!! ############
-
-
-# import the necessary packages
-import datetime
 
 #Class to examine Frames per second of camera stream. Currently not used.
 class FPS:
@@ -81,7 +77,7 @@ class WebcamVideoStream:
 
         #Automatically sets exposure to 0 to track tape
         self.webcam = camera
-        self.webcam.setExposureManual(0)
+        self.webcam.setExposureManual(20)
         #Some booleans so that we don't keep setting exposure over and over to the same value
         self.autoExpose = False
         self.prevValue = self.autoExpose
@@ -116,10 +112,10 @@ class WebcamVideoStream:
                 if(self.autoExpose != self.prevValue):
                     self.prevValue = self.autoExpose
                     self.webcam.setExposureAuto()
-            else:
+            # else:
                 if (self.autoExpose != self.prevValue):
                     self.prevValue = self.autoExpose
-                    self.webcam.setExposureManual(0)
+                    self.webcam.setExposureManual(20) 
             #gets the image and timestamp from cameraserver
             (self.timestamp, self.img) = self.stream.grabFrame(self.img)
 
@@ -159,12 +155,12 @@ verticalView = math.atan(math.tan(diagonalView/2) * (verticalAspect / diagonalAs
 H_FOCAL_LENGTH = image_width / (2*math.tan((horizontalView/2)))
 V_FOCAL_LENGTH = image_height / (2*math.tan((verticalView/2)))
 #blurs have to be odd
-green_blur = 7
+green_blur = 3
 orange_blur = 27
 
 # define range of green of retroreflective tape in HSV
-lower_green = np.array([0,220,25])
-upper_green = np.array([101, 255, 255])
+lower_green = np.array([55.03597122302157,128.41726618705036,132.7396301468074])
+upper_green = np.array([108.78787878787878, 255.0, 255.0])
 #define range of orange from cargo ball in HSV
 lower_orange = np.array([0,193,92])
 upper_orange = np.array([23, 255, 255])
@@ -318,6 +314,7 @@ def findBall(contours, image, centerX, centerY):
             closestCargo = min(biggestCargo, key=lambda x: (math.fabs(x[0] - centerX)))
             xCoord = closestCargo[0]
             finalTarget = calculateYaw(xCoord, centerX, H_FOCAL_LENGTH)
+            # distance = calculateDistance(heightOfCamera, heightOfTarget, pitch)
             print("Yaw: " + str(finalTarget))
             # Puts the yaw on screen
             # Draws yaw of target + line where center of target is
@@ -376,6 +373,8 @@ def findTape(contours, image, centerX, centerY):
                     yaw = calculateYaw(cx, centerX, H_FOCAL_LENGTH)
                     # Calculates yaw of contour (horizontal position in degrees)
                     pitch = calculatePitch(cy, centerY, V_FOCAL_LENGTH)
+                    #calculates distance of contour (25 in camera height, 29 inches tape height, pitch angle triangle)
+                    distance = calculateDistance(1, 1.83, pitch)
 
                     ##### DRAWS CONTOUR######
                     # Gets rotated bounding rectangle of contour
@@ -392,6 +391,8 @@ def findTape(contours, image, centerX, centerY):
                     yaw = calculateYaw(cx, centerX, H_FOCAL_LENGTH)
                     # Calculates yaw of contour (horizontal position in degrees)
                     pitch = calculatePitch(cy, centerY, V_FOCAL_LENGTH)
+                    #calculates distance of contour (25 in camera height, 29 inches tape height, pitch angle triangle)
+                    distance = calculateDistance(1, 1.83, pitch)
 
 
                     # Draws a vertical white line passing through center of contour
@@ -465,9 +466,15 @@ def findTape(contours, image, centerX, centerY):
         #Sorts targets based on x coords to break any angle tie
         targets.sort(key=lambda x: math.fabs(x[0]))
         finalTarget = min(targets, key=lambda x: math.fabs(x[1]))
+        networkTable.putNumber("tapePitch", pitch)
+        networkTable.putNumber("tapeDistance", distance)
         # Puts the yaw on screen
         #Draws yaw of target + line where center of target is
-        cv2.putText(image, "Yaw: " + str(finalTarget[1]), (40, 40), cv2.FONT_HERSHEY_COMPLEX, .6,
+        cv2.putText(image, "Yaw: " + str(finalTarget[1]), (10, 20), cv2.FONT_HERSHEY_COMPLEX, .6,
+                    (255, 255, 255))
+        cv2.putText(image, "Pitch: " + str(pitch), (10, 40), cv2.FONT_HERSHEY_COMPLEX, .6,
+                    (255, 255, 255))
+        cv2.putText(image, "Distance: " + str(distance), (10, 60), cv2.FONT_HERSHEY_COMPLEX, .6,
                     (255, 255, 255))
         cv2.line(image, (finalTarget[0], screenHeight), (finalTarget[0], 0), (255, 0, 0), 2)
 
@@ -519,16 +526,19 @@ def calculateDistance(heightOfCamera, heightOfTarget, pitch):
               camera -----
                        d
     '''
-    distance = math.fabs(heightOfTargetFromCamera / math.tan(math.radians(pitch)))
+    if pitch != 0:
+        distance = math.fabs(heightOfTargetFromCamera / math.tan(math.radians(pitch)))
+    else:
+        distance = 0
 
-    return distance
+    return round(distance,5)
 
 
 # Uses trig and focal length of camera to find yaw.
 # Link to further explanation: https://docs.google.com/presentation/d/1ediRsI-oR3-kwawFJZ34_ZTlQS2SDBLjZasjzZ-eXbQ/pub?start=false&loop=false&slide=id.g12c083cffa_0_298
 def calculateYaw(pixelX, centerX, hFocalLength):
     yaw = math.degrees(math.atan((pixelX - centerX) / hFocalLength))
-    return round(yaw)
+    return round(yaw, 5)
 
 
 # Link to further explanation: https://docs.google.com/presentation/d/1ediRsI-oR3-kwawFJZ34_ZTlQS2SDBLjZasjzZ-eXbQ/pub?start=false&loop=false&slide=id.g12c083cffa_0_298
@@ -536,7 +546,7 @@ def calculatePitch(pixelY, centerY, vFocalLength):
     pitch = math.degrees(math.atan((pixelY - centerY) / vFocalLength))
     # Just stopped working have to do this:
     pitch *= -1
-    return round(pitch)
+    return round(pitch,5)
 
 def getEllipseRotation(image, cnt):
     try:
@@ -572,7 +582,6 @@ def getEllipseRotation(image, cnt):
         return rotation
 
 #################### FRC VISION PI Image Specific #############
-configFile = "/boot/frc.json"
 
 class CameraConfig: pass
 
@@ -580,9 +589,11 @@ team = None
 server = False
 cameraConfigs = []
 
+configFile = "/boot/frc.json"
+
 """Report parse error."""
-def parseError(str):
-    print("config error in '" + configFile + "': " + str, file=sys.stderr)
+def parseError(error):
+    print("config error")
 
 """Read single camera configuration."""
 def readCameraConfig(config):
@@ -617,7 +628,7 @@ def readConfig():
         with open(configFile, "rt") as f:
             j = json.load(f)
     except OSError as err:
-        print("could not open '{}': {}".format(configFile, err), file=sys.stderr)
+        print("could not open config")
         return False
 
     # top level must be an object
@@ -674,7 +685,7 @@ if __name__ == "__main__":
     # start NetworkTables
     ntinst = NetworkTablesInstance.getDefault()
     #Name of network table - this is how it communicates with robot. IMPORTANT
-    networkTable = NetworkTables.getTable('ChickenVision')
+    networkTable = NetworkTables.getTable('Vision by @samay')
 
     if server:
         print("Setting up NetworkTables server")
@@ -727,9 +738,9 @@ if __name__ == "__main__":
             processed = frame
         else:
             # Checks if you just want camera for Tape processing , False by default
-            if(networkTable.getBoolean("Tape", False)):
+            if(networkTable.getBoolean("Tape", True)):
                 #Lowers exposure to 0
-                cap.autoExpose = False
+                # cap.autoExpose = False
                 boxBlur = blurImg(frame, green_blur)
                 threshold = threshold_video(lower_green, upper_green, boxBlur)
                 processed = findTargets(frame, threshold)
