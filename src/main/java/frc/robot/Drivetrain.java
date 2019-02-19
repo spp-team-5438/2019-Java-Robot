@@ -36,11 +36,24 @@ public class Drivetrain {
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
 
+    public void init() {
+        mDrive.setSafetyEnabled(true);
+        mDrive.setExpiration(0.020);
+        mDrive.setDeadband(0.2);
+
+        frontLeft.enableVoltageCompensation(true);
+        rearLeft.enableVoltageCompensation(true);
+        frontRight.enableVoltageCompensation(true);
+        rearRight.enableVoltageCompensation(true);
+
+        frontLeft.configVoltageCompSaturation(12.0, 0);
+        rearLeft.configVoltageCompSaturation(12.0, 0);
+        frontRight.configVoltageCompSaturation(12.0, 0);
+        rearRight.configVoltageCompSaturation(12.0, 0);
+    }
+
     public void main() {
         //create drivetrain with controller inputs and set safety
         mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
-        mDrive.setSafetyEnabled(true);
-        mDrive.setExpiration(0.1);
-        mDrive.setDeadband(0.3);
     }
 }

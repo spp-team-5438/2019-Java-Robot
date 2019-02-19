@@ -10,23 +10,23 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
-/**
- * Add your docs here.
- */
+import edu.wpi.first.wpilibj.VictorSP;
+
 public class Autonomous {
 
-    public static int frontLeftnum = 2;
-    public static int rearLeftnum = 1;
-    public static int frontRightnum = 4;
-    public static int rearRightnum = 3;
+    //define drivetrain
+    private WPI_TalonSRX frontLeft = new WPI_TalonSRX(2);
+    private WPI_TalonSRX rearLeft = new WPI_TalonSRX(1);
+    private WPI_TalonSRX frontRight = new WPI_TalonSRX(4);
+    private WPI_TalonSRX rearRight = new WPI_TalonSRX(3);
+    
+    //define elevator
+    private WPI_VictorSPX eMotor = new WPI_VictorSPX(5);
 
-    //create speedcontroller entries for talons
-    public static WPI_TalonSRX frontLeft = new WPI_TalonSRX(frontLeftnum);
-    public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
-    public static WPI_TalonSRX frontRight = new WPI_TalonSRX(frontRightnum);
-    public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
+    //define arm
+    private VictorSP armMotor = new VictorSP(0);
 
 
     public static void displayvalues() {
@@ -38,12 +38,20 @@ public class Autonomous {
         frontRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
-        boolean testbool;
-        testbool = true;
+        frontLeft.setSelectedSensorPosition(0);
+        rearLeft.setSelectedSensorPosition(0);
+        frontRight.setSelectedSensorPosition(0);
+        rearRight.setSelectedSensorPosition(0);
 
-        while (testbool) {
-            frontLeft.set(ControlMode.Position, 5000); //doesnt work but should?
-        }
-        
+        frontLeft.config_kP(0, 1);
+        rearLeft.config_kP(0, 1);
+        frontRight.config_kP(0, 1);
+        rearRight.config_kP(0, 1);
     }
+
+    public void main() {
+        frontLeft.set(ControlMode.Position, 5000);
+
+    }
+
 }

@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
+    mecanumDrivetrain.init();
   }
 
   //run when the robot enters operator control:
