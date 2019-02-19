@@ -115,7 +115,7 @@ class WebcamVideoStream:
             # else:
                 if (self.autoExpose != self.prevValue):
                     self.prevValue = self.autoExpose
-                    self.webcam.setExposureManual(20) 
+                    self.webcam.setExposureManual(20)
             #gets the image and timestamp from cameraserver
             (self.timestamp, self.img) = self.stream.grabFrame(self.img)
 
@@ -407,6 +407,10 @@ def findTape(contours, image, centerX, centerY):
                     (x, y), radius = cv2.minEnclosingCircle(cnt)
                     # Rounds center of enclosing circle
                     center = (int(x), int(y))
+					# x coordinate
+					x = int(x)
+					# y coordinate
+					y = int(y)
                     # Rounds radius of enclosning circle
                     radius = int(radius)
                     # Makes bounding rectangle of contour
@@ -468,7 +472,9 @@ def findTape(contours, image, centerX, centerY):
         finalTarget = min(targets, key=lambda x: math.fabs(x[1]))
         networkTable.putNumber("tapePitch", pitch)
         networkTable.putNumber("tapeDistance", distance)
-        # Puts the yaw on screen
+		networkTable.putNumber("x", x)
+		networkTable.putNumber("y", y) # x & y coordinates of circle drawn around countour
+        # Puts the yaw, pitch, & distance on screen
         #Draws yaw of target + line where center of target is
         cv2.putText(image, "Yaw: " + str(finalTarget[1]), (10, 20), cv2.FONT_HERSHEY_COMPLEX, .6,
                     (255, 255, 255))
