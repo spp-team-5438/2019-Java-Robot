@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
   //define speedcontrollers for victors
@@ -21,28 +22,40 @@ public class Elevator {
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
 
-    public void main() {
-      //set the second motor to follow the first motor so they both perform the same action
+  public void main() {
+    //set motor safety
+    eMotor.setSafetyEnabled(true);
+    eMotor.setExpiration(0.02);
 
-      //set motor safety
-      eMotor.setSafetyEnabled(false);
-      eMotor.setExpiration(0.05);
+    //send data to smartdashboard
+    double eMotorspeed = eMotor.getMotorOutputPercent();
+    SmartDashboard.putNumber("Elevator Speed", eMotorspeed);
 
-      //scan for bumpers being pressed to drive the motors
-      if (controller.getBumperPressed(rightHand)) {
-        eMotor.set(1);
-      } 
-      else if (controller.getBumperPressed(leftHand)) {
-        eMotor.set(-1);
-      } 
-      else if (controller.getBumperReleased(rightHand)) {
-        eMotor.set(0);
-      }
-      else if (controller.getBumperReleased(leftHand)) {
-        eMotor.set(0);
-      }
-      else {
-        eMotor.set(0);
-      }
+    //print statements
+    if (controller.getBumperPressed(rightHand)) {
+      System.out.println("RIGHT BUMPER PRESSED - ELEVATOR GOING UP!");
     }
+    else if (controller.getBumperPressed(leftHand)) {
+      System.out.println("LEFT BUMPER PRESSED - ELEVATOR GOING DOWN!");
+    }
+
+    //scan for bumpers being pressed to drive the motors
+    if (controller.getBumper(rightHand)) {
+      eMotor.set(1);
+    } 
+    else if (controller.getBumper(leftHand)) {
+      eMotor.set(-1);
+    } 
+    else if (controller.getBumperReleased(rightHand)) {
+      System.out.println("RIGHT BUMPER RELEASED!");
+      eMotor.set(0);
+    }
+    else if (controller.getBumperReleased(leftHand)) {
+      System.out.println("LEFT BUMPER RELEASED!");
+      eMotor.set(0);
+    }
+    else {
+      eMotor.set(0);
+    }
+  }
 }

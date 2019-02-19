@@ -8,15 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.XboxController;
-
-
 import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
 import frc.robot.Arm;
-import frc.robot.Camera;
 import frc.robot.Elevator;
-import frc.robot.REVDigitBoard;
 import frc.robot.Autonomous;
 import frc.robot.Vision;
 
@@ -27,9 +22,7 @@ public class Robot extends TimedRobot {
   Drivetrain mecanumDrivetrain = new Drivetrain();
   Pneumatics pneumatics = new Pneumatics();
   Arm arm = new Arm();
-  Camera camera = new Camera();
   Elevator elevator = new Elevator();
-  REVDigitBoard display = new REVDigitBoard();
   Autonomous auto = new Autonomous();
   Vision vision = new Vision();
 
@@ -37,9 +30,6 @@ public class Robot extends TimedRobot {
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    display.display("5438");
-    camera.main();
-    
   }
 
   //run when the robot enters operator control:
