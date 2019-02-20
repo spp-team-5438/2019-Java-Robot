@@ -18,7 +18,9 @@ public class Autonomous {
 
     //define all controllers
     private VictorSP frontLeft = new VictorSP(8);
+//  private WPI_VictorSPX frontLeft = new WPI_VictorSPX(5);  
     private VictorSP frontRight = new VictorSP(9);
+//  private WPI_VictorSPX frontRight = new WPI_VictorSPX(6);
     private WPI_TalonSRX rearLeft = new WPI_TalonSRX(1);
     private WPI_TalonSRX rearRight = new WPI_TalonSRX(3);
     private WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
@@ -31,11 +33,18 @@ public class Autonomous {
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearLeft.setSelectedSensorPosition(0);
         rearRight.setSelectedSensorPosition(0);
+//      frontLeft.follow(rearLeft);
+//      frontRight.follow(rearRight);        
     }
 
     //autonomous target following using vision tracking
     public void vision_based() {
         vision.auto_vision();
+    }
+
+    public void encoder_based() {
+        rearLeft.set(ControlMode.Position, 4096);
+        rearRight.set(ControlMode.Position, 4096);
     }
 
 }

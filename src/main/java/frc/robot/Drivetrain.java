@@ -7,6 +7,7 @@
 
 package frc.robot;
 
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,6 +23,8 @@ public class Drivetrain {
     //create speedcontroller entries for talons
     public static VictorSP frontLeft = new VictorSP(8);
     public static VictorSP frontRight = new VictorSP(9);
+//  public static WPI_VictorSPX frontLeft = new WPI_VictorSPX(5);
+//  public static WPI_VictorSPX frontRight = new WPI_VictorSPX(6);    
     public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
     public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
 
@@ -31,14 +34,25 @@ public class Drivetrain {
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
 
-    public void main() {
-        //create drivetrain with controller inputs and set safety
-        mDrive.driveCartesian((controller.getRawAxis(4) * -1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * -1));
+    public void init() {
         mDrive.setDeadband(0);
         mDrive.setSafetyEnabled(true);
         mDrive.setExpiration(0.5);
-        frontLeft.setInverted(true);
-        frontRight.setInverted(true);
+        //frontLeft.setInverted(true);
+        //frontRight.setInverted(true);
+        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    }
+    
+    public void main() {
+        //create drivetrain with controller inputs and set safety
+        mDrive.driveCartesian((controller.getRawAxis(4) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * 1));
+//      mDrive.driveCartesian((controller.getRawAxis(4) * -1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * -1));
+
+        int leftEncoder = rearLeft.getSelectedSensorPosition();
+        int rightEncoder = rearRight.getSelectedSensorPosition();
+        SmartDashboard.putNumber("Left Encoder", leftEncoder);
+        SmartDashboard.putNumber("Right Encoder", rightEncoder);
     }
 
     public void driveStraight() {

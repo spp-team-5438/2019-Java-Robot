@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
   //run when the robot enters operator control:
   @Override
   public void teleopInit() {
+    mecanumDrivetrain.init();
   }
 
   //run periodically when the operator is in control:
