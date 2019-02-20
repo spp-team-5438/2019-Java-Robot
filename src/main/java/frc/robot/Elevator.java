@@ -8,15 +8,13 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator {
-  //define speedcontrollers for victors
+  //define motor controller
   public static WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
 
   //define controller and hands

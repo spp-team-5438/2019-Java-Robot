@@ -13,10 +13,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.VictorSP;
 
-
-/**
- * Add your docs here.
- */
 public class Drivetrain {
 
     //define numbers of talons
@@ -25,8 +21,8 @@ public class Drivetrain {
 
     //create speedcontroller entries for talons
     public static VictorSP frontLeft = new VictorSP(8);
-    public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
     public static VictorSP frontRight = new VictorSP(9);
+    public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
     public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
 
     //create mecanum drive
@@ -35,34 +31,27 @@ public class Drivetrain {
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
 
-    public void init() {
-        mDrive.setSafetyEnabled(true);
-        mDrive.setExpiration(0.5);
-
-        rearLeft.enableVoltageCompensation(true);
-        rearRight.enableVoltageCompensation(true);
-
-        rearLeft.configVoltageCompSaturation(12.0, 0);
-        rearRight.configVoltageCompSaturation(12.0, 0);
-    }
-
     public void main() {
         //create drivetrain with controller inputs and set safety
         mDrive.driveCartesian((controller.getRawAxis(4) * -1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * -1));
         mDrive.setDeadband(0);
+        mDrive.setSafetyEnabled(true);
+        mDrive.setExpiration(0.5);
         frontLeft.setInverted(true);
         frontRight.setInverted(true);
     }
 
-//     public void driveStraight() {
-//         mDrive.driveCartesian(0,.25,0);
-//     }
+    public void driveStraight() {
+        mDrive.driveCartesian(0,.25,0);
+    }
 
-//     public void driveRight() {
-//         mDrive.driveCartesian(.5,0,0);
-//     }
+    public void driveRight() {
+        mDrive.driveCartesian(.5,0,0);
+        //mDrive.drivePolar(.5, -90, 0); //This is what it probably should be (unknown if thats left or right)
+    }
 
-//     public void driveLeft() {
-//         mDrive.drivePolar(.5,180,0);
-//     }
+    public void driveLeft() {
+        mDrive.drivePolar(.5,180,0);
+        //mDrive.drivePolar(.5, 90, 0) This is what is probably should be (unknown if thats left or right)
+    }
 }

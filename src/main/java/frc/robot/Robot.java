@@ -12,9 +12,9 @@ import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
 import frc.robot.Arm;
 import frc.robot.Elevator;
-//import frc.robot.Autonomous;
-//import frc.robot.Vision;
-import frc.robot.NavX;
+import frc.robot.Autonomous;
+import frc.robot.Vision;
+//import frc.robot.NavX;
 
 
 public class Robot extends TimedRobot {
@@ -24,16 +24,15 @@ public class Robot extends TimedRobot {
   Pneumatics pneumatics = new Pneumatics();
   Arm arm = new Arm();
   Elevator elevator = new Elevator();
-  //Autonomous auto = new Autonomous();
-  NavX gyro = new NavX();
-  //Vision vision = new Vision();
-
+  Autonomous auto = new Autonomous();
+  //NavX gyro = new NavX();
+  Vision vision = new Vision();
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    mecanumDrivetrain.init();
-    gyro.init();
+    auto.init();
+    //gyro.init();
   }
 
   //run when the robot enters operator control:
@@ -44,13 +43,12 @@ public class Robot extends TimedRobot {
   //run periodically when the operator is in control:
   @Override
 	public void teleopPeriodic() {
-
-    //call other classes
     mecanumDrivetrain.main();
     pneumatics.main();
     arm.main();
     elevator.main();
-    // vision.vision();
+    //target alignment using vision tracking triggered by the driver
+    vision.assist_vision(); 
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
@@ -61,11 +59,7 @@ public class Robot extends TimedRobot {
   // run periodically when the robot is in autonomous mode:
   @Override
   public void autonomousPeriodic() {
-    //auto.init();
-  }
-
- // run when the robot is put into disabled mode:
-  @Override
-	public void disabledInit() {
+    //fully auto following based on vision targeting (ghetto limelight)
+    auto.vision_based(); 
   }
 }

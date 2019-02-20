@@ -8,17 +8,14 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm {
 
-    //define Victor and set PWM channel
+    //define motor controller
     WPI_TalonSRX armMotor = new WPI_TalonSRX(2);
 
     //define controller and hands
@@ -45,6 +42,8 @@ public class Arm {
         if (rightTriggerValue > 0) {
             armMotor.set(correct_rightTriggerValue);
             System.out.println("ARM - INTAKE " + armMotorSpeed);
+            
+            //cap speed at -0.5
             if (correct_rightTriggerValue < -0.5) {
                 armMotor.set(-0.5); 
             }
@@ -55,6 +54,8 @@ public class Arm {
         else if (leftTriggerValue > 0) {
             armMotor.set(leftTriggerValue);
             System.out.println("ARM - EXPEL " + armMotorSpeed);
+            
+            //cap speed at 0.5
             if (leftTriggerValue > 0.5) {
                 armMotor.set(0.5);
             }
