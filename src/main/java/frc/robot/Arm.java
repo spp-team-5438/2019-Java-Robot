@@ -7,8 +7,11 @@
 
 package frc.robot;
 
-import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.XboxController;
+
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Arm {
 
     //define Victor and set PWM channel
-    VictorSP armMotor = new VictorSP(0);
+    WPI_TalonSRX armMotor = new WPI_TalonSRX(2);
 
     //define controller and hands
     XboxController controller = new XboxController(0);
@@ -28,34 +31,39 @@ public class Arm {
         //get values of triggers for use
         double leftTriggerValue = controller.getTriggerAxis(leftHand);
         double rightTriggerValue = controller.getTriggerAxis(rightHand);
+        double correct_rightTriggerValue = (-1*rightTriggerValue);
         
         //set motors safety
         armMotor.setSafetyEnabled(true);
-        armMotor.setExpiration(0.020);
+        armMotor.setExpiration(0.5);
 
         //send values to smartdashbaord
-        double armMotorSpeed = armMotor.getSpeed();
+        double armMotorSpeed = armMotor.getMotorOutputPercent();
         SmartDashboard.putNumber("Arm Speed", armMotorSpeed);
 
         //if right trigger is pressed spin one way, if left is pressed spin other way
         if (rightTriggerValue > 0) {
-            armMotor.setInverted(true);
-            armMotor.set(rightTriggerValue);
+            armMotor.set(correct_rightTriggerValue);
             System.out.println("ARM - INTAKE " + armMotorSpeed);
-            if (rightTriggerValue > 0.5) {
-                armMotor.set(0.5);
+            if (correct_rightTriggerValue < -0.5) {
+                armMotor.set(-0.5); 
+            }
+            else {
+                armMotor.set(correct_rightTriggerValue);
             }
         }
         else if (leftTriggerValue > 0) {
-            armMotor.setInverted(false);
             armMotor.set(leftTriggerValue);
             System.out.println("ARM - EXPEL " + armMotorSpeed);
             if (leftTriggerValue > 0.5) {
                 armMotor.set(0.5);
             }
+            else {
+                armMotor.set(leftTriggerValue);
+            }
+        }
         else {
             armMotor.set(0);
         }
-    }
     }
 }
