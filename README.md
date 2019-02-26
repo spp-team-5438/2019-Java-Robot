@@ -20,7 +20,7 @@ FRC 2019 Deep Space
 - [ ] autonomous? (see below; WIP)
 
 # Auto Plan
-Drive forward x feet
-Turn 90 degrees by rotating left and right sides a quarter turn moving opposite sides
-Drive forward x feet
-Use .set(.5) for intake; timer.delay; then .set(0) to make intake motor spin for a certain amount of time
+- Drive forward x feet
+- Turn 90 degrees by rotating left and right sides a quarter turn moving opposite sides
+- Drive forward x feet
+- Use .set(.5) for intake; timer.delay; then .set(0) to make intake motor spin for a certain amount of time
