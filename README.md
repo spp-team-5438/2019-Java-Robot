@@ -6,7 +6,7 @@ FRC 2019 Deep Space
 - [x] Write Drivetrain Code
 - [x] Test and Finalize Drivetrain
 - [x] Write Elevator Code
-- [ ] Test and Finalize Elevator
+- [x] Test and Finalize Elevator
 - [x] Write Arm Code
 - [x] Write Pneumatics Code
 - [x] Test and Finalize Pneumatics
@@ -17,6 +17,7 @@ FRC 2019 Deep Space
 - [x] Integrate a vision recognition system
 - [x] Vision following (similar to limelight)
 - [x] Vision driver assistance when a button is pressed
+- [ ] Tune vision system for camera YAW offset
 - [ ] autonomous? (see below; WIP)
 
 # Auto Plan
@@ -24,3 +25,9 @@ FRC 2019 Deep Space
 - Turn 90 degrees by rotating left and right sides a quarter turn moving opposite sides
 - Drive forward x feet
 - Use .set(.5) for intake; timer.delay; then .set(0) to make intake motor spin for a certain amount of time
+
+# To-do (non-programming)
+- [ ] mount camera
+- [ ] swap front motor controllers to Victor SPX for ability to use .follow()
+- [ ] finish intake and mount to robot
+- [ ] connect elevator encoder to talon
