@@ -42,9 +42,19 @@ public class Autonomous {
         vision.auto_vision();
     }
 
+    public void encoder_based_init() {
+    }
+    
     public void encoder_based() {
-        rearLeft.set(ControlMode.Position, 4096);
-        rearRight.set(ControlMode.Position, 4096);
+        
+        //possibly moves one rotation; please work
+        boolean isFinished = false;
+        if (isFinished == false) {
+            rearLeft.set(ControlMode.Position, 4096);
+            rearRight.set(ControlMode.Position, 4096);
+            isFinished = true;
+        }
+        
     }
 
 }
