@@ -26,6 +26,9 @@ public class Autonomous {
     private WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
     private WPI_TalonSRX armMotor = new WPI_TalonSRX(2);
 
+    double circumferenceInInches = 18.84;
+    double pulsesPerRotation = 4096;
+
     Vision vision = new Vision();
     
     public void init() {
@@ -45,16 +48,11 @@ public class Autonomous {
     public void encoder_based_init() {
     }
     
-    public void encoder_based() {
-        
-        //possibly moves one rotation; please work
-        boolean isFinished = false;
-        if (isFinished == false) {
-            rearLeft.set(ControlMode.Position, 4096);
-            rearRight.set(ControlMode.Position, 4096);
-            isFinished = true;
+    public void drive_forward(int distance_inches) {
+        double targetPulseCount = distance_inches * circumferenceInInches * pulsesPerRotation;
+        rearLeft.set(ControlMode.Position, targetPulseCount);
+        rearRight.set(ControlMode.Position, targetPulseCount);
         }
         
-    }
-
 }
+
