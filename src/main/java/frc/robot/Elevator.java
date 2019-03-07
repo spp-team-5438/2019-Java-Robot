@@ -22,6 +22,9 @@ public class Elevator {
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
 
+  dPadXAxis = controller.getRawAxis(5);
+  dPadYAxis = controller.getRawAxis(6);
+
   public void main() {
     //set motor safety
     eMotor.setSafetyEnabled(true);
@@ -42,10 +45,10 @@ public class Elevator {
     //scan for bumpers being pressed to drive the motors
     if (controller.getBumper(rightHand)) {
       eMotor.set(-1);
-    } 
+    }
     else if (controller.getBumper(leftHand)) {
       eMotor.set(1);
-    } 
+    }
     else if (controller.getBumperReleased(rightHand)) {
       System.out.println("RIGHT BUMPER RELEASED!");
       eMotor.set(-0.07);
@@ -58,4 +61,19 @@ public class Elevator {
       eMotor.set(-0.07);
     }
   }
+
+  public void bottom_position() {
+    if (dPadYAxis == -1) {
+
+
+      //eMotor.set(ControlMode.Position, encodercount)
+    }
+  }
+
+  public void middle_position() {
+
+  }
+
+
+
 }

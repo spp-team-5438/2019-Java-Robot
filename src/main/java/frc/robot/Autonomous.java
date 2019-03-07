@@ -19,7 +19,7 @@ public class Autonomous {
 
     //define all controllers
 //     private VictorSP frontLeft = new VictorSP(8);
-    private WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);  
+    private WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);
 //     private VictorSP frontRight = new VictorSP(9);
     private WPI_VictorSPX frontRight = new WPI_VictorSPX(5);
     private WPI_TalonSRX rearLeft = new WPI_TalonSRX(1);
@@ -31,14 +31,18 @@ public class Autonomous {
     double pulsesPerRotation = 4096;
 
     Vision vision = new Vision();
-    
+
     public void init() {
-        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        rearLeft.setSelectedSensorPosition(0);
-        rearRight.setSelectedSensorPosition(0);
-//      frontLeft.follow(rearLeft);
-//      frontRight.follow(rearRight);        
+
+
+
+
+      rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+      rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+      rearLeft.setSelectedSensorPosition(0);
+      rearRight.setSelectedSensorPosition(0);
+      frontLeft.follow(rearLeft);
+      frontRight.follow(rearRight);
     }
 
     //autonomous target following using vision tracking
@@ -48,13 +52,13 @@ public class Autonomous {
 
     public void encoder_based_init() {
     }
-    
+
     public void drive_forward(int distance_inches) {
         double targetPulseCount = distance_inches * circumferenceInInches * pulsesPerRotation;
-        rearLeft.set(ControlMode.Position, targetPulseCount); 
+        rearLeft.set(ControlMode.Position, targetPulseCount);
         rearRight.set(ControlMode.Position, targetPulseCount);
     }
-    
+
     public void rightturn() {
         rearRight.set(ControlMode.Position, -2048);
         rearLeft.set(ControlMode.Position, 2048);
@@ -64,11 +68,11 @@ public class Autonomous {
         rearRight.set(ControlMode.Position, 2048);
         rearLeft.set(ControlMode.Position, -2048);
     }
-    
+
     public void drive_backward(int distance_inches) {
         double targetPulseCount = distance_inches * circumferenceInInches * pulsesPerRotation * -1;
-        rearLeft.set(ControlMode.Position, targetPulseCount); 
+        rearLeft.set(ControlMode.Position, targetPulseCount);
         rearRight.set(ControlMode.Position, targetPulseCount);
-        
+
     }
 }

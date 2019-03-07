@@ -31,7 +31,6 @@ public class Robot extends TimedRobot {
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    auto.init();
     //gyro.init();
   }
 
@@ -49,12 +48,13 @@ public class Robot extends TimedRobot {
     arm.main();
     elevator.main();
     //target alignment using vision tracking triggered by the driver
-    vision.assist_vision(); 
+    vision.assist_vision();
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
+    auto.init();
     //auto.drive_forward(24);
   }
 
@@ -62,6 +62,6 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     //fully auto following based on vision targeting (ghetto limelight)
-    auto.vision_based(); 
+    auto.vision_based();
   }
 }
