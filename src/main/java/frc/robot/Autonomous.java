@@ -10,6 +10,7 @@ package frc.robot;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.VictorSP;
 
 import frc.robot.Vision;
@@ -17,10 +18,10 @@ import frc.robot.Vision;
 public class Autonomous {
 
     //define all controllers
-    private VictorSP frontLeft = new VictorSP(8);
-//  private WPI_VictorSPX frontLeft = new WPI_VictorSPX(5);  
-    private VictorSP frontRight = new VictorSP(9);
-//  private WPI_VictorSPX frontRight = new WPI_VictorSPX(6);
+//     private VictorSP frontLeft = new VictorSP(8);
+    private WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);  
+//     private VictorSP frontRight = new VictorSP(9);
+    private WPI_VictorSPX frontRight = new WPI_VictorSPX(5);
     private WPI_TalonSRX rearLeft = new WPI_TalonSRX(1);
     private WPI_TalonSRX rearRight = new WPI_TalonSRX(3);
     private WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
@@ -50,9 +51,24 @@ public class Autonomous {
     
     public void drive_forward(int distance_inches) {
         double targetPulseCount = distance_inches * circumferenceInInches * pulsesPerRotation;
-        rearLeft.set(ControlMode.Position, targetPulseCount);
+        rearLeft.set(ControlMode.Position, targetPulseCount); 
         rearRight.set(ControlMode.Position, targetPulseCount);
-        }
-        
-}
+    }
+    
+    public void rightturn() {
+        rearRight.set(ControlMode.Position, -2048);
+        rearLeft.set(ControlMode.Position, 2048);
+    }
 
+    public void leftturn() {
+        rearRight.set(ControlMode.Position, 2048);
+        rearLeft.set(ControlMode.Position, -2048);
+    }
+    
+    public void drive_backward(int distance_inches) {
+        double targetPulseCount = distance_inches * circumferenceInInches * pulsesPerRotation * -1;
+        rearLeft.set(ControlMode.Position, targetPulseCount); 
+        rearRight.set(ControlMode.Position, targetPulseCount);
+        
+    }
+}

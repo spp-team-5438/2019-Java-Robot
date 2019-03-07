@@ -12,7 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.VictorSP;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 public class Drivetrain {
 
@@ -21,10 +21,10 @@ public class Drivetrain {
     public static int rearRightnum = 3;
 
     //create speedcontroller entries for talons
-    public static VictorSP frontLeft = new VictorSP(8);
-    public static VictorSP frontRight = new VictorSP(9);
-//  public static WPI_VictorSPX frontLeft = new WPI_VictorSPX(5);
-//  public static WPI_VictorSPX frontRight = new WPI_VictorSPX(6);    
+    // public static VictorSP frontLeft = new VictorSP(8);
+    // public static VictorSP frontRight = new VictorSP(9);
+    public static WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);
+    public static WPI_VictorSPX frontRight = new WPI_VictorSPX(5);    
     public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
     public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
 
@@ -38,8 +38,6 @@ public class Drivetrain {
         mDrive.setDeadband(0);
         mDrive.setSafetyEnabled(true);
         mDrive.setExpiration(0.5);
-        //frontLeft.setInverted(true);
-        //frontRight.setInverted(true);
         rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }

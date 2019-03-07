@@ -55,6 +55,7 @@ public class Robot extends TimedRobot {
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
+    //auto.drive_forward(24);
   }
 
   // run periodically when the robot is in autonomous mode:
