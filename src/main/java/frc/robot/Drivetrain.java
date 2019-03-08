@@ -46,6 +46,7 @@ public class Drivetrain {
         //create drivetrain with controller inputs and set safety
         mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
 
+        //send encoder values to smartdashboard
         int leftEncoder = rearLeft.getSelectedSensorPosition();
         int rightEncoder = rearRight.getSelectedSensorPosition();
         SmartDashboard.putNumber("Left Encoder", leftEncoder);

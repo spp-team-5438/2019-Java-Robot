@@ -38,33 +38,52 @@ public class Arm {
         double armMotorSpeed = armMotor.getMotorOutputPercent();
         SmartDashboard.putNumber("Arm Speed", armMotorSpeed);
 
-        //if right trigger is pressed spin one way, if left is pressed spin other way
-        if (rightTriggerValue > 0) {
-            armMotor.set(correct_rightTriggerValue);
-            System.out.println("ARM - INTAKE " + armMotorSpeed);
-            
-            //cap speed at -0.5
-            if (correct_rightTriggerValue < -0.5) {
-                armMotor.set(-0.5); 
-            }
-            else {
-                armMotor.set(correct_rightTriggerValue);
-            }
-        }
-        else if (leftTriggerValue > 0) {
-            armMotor.set(leftTriggerValue);
-            System.out.println("ARM - EXPEL " + armMotorSpeed);
-            
-            //cap speed at 0.5
-            if (leftTriggerValue > 0.5) {
-                armMotor.set(0.5);
-            }
-            else {
-                armMotor.set(leftTriggerValue);
-            }
-        }
-        else {
+        //conditionals for operating the intake motor with bumpers
+        if (controller.getBumper(rightHand)) {
+            armMotor.set(0.5);
+            System.out.println("Intaking...");
+          }
+          else if (controller.getBumper(leftHand)) {
+            armMotor.set(-0.5);
+            System.out.println("Expelling...");
+          }
+          else if (controller.getBumperReleased(rightHand)) {
             armMotor.set(0);
-        }
+          }
+          else if (controller.getBumperReleased(leftHand)) {
+            armMotor.set(0);
+          }
+          else {
+            armMotor.set(0);
+          }
+        
+        //if right trigger is pressed spin one way, if left is pressed spin other way
+        // if (rightTriggerValue > 0) {
+        //     armMotor.set(correct_rightTriggerValue);
+        //     System.out.println("ARM - INTAKE " + armMotorSpeed);
+            
+        //     //cap speed at -0.5
+        //     if (correct_rightTriggerValue < -0.5) {
+        //         armMotor.set(-0.5); 
+        //     }
+        //     else {
+        //         armMotor.set(correct_rightTriggerValue);
+        //     }
+        // }
+        // else if (leftTriggerValue > 0) {
+        //     armMotor.set(leftTriggerValue);
+        //     System.out.println("ARM - EXPEL " + armMotorSpeed);
+            
+        //     //cap speed at 0.5
+        //     if (leftTriggerValue > 0.5) {
+        //         armMotor.set(0.5);
+        //     }
+        //     else {
+        //         armMotor.set(leftTriggerValue);
+        //     }
+        // }
+        // else {
+        //     armMotor.set(0);
+        // }
     }
 }

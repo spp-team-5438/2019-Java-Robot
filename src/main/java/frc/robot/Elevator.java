@@ -20,20 +20,23 @@ public class Elevator {
   public static WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
 
   //define controller and hands
-  public static XboxController controller = new XboxController(0);
+  public static XboxController controller2 = new XboxController(1);
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
 
   public void init() {
+    //set motor safety
+    eMotor.setSafetyEnabled(true);
+    eMotor.setExpiration(0.5);
+    
+    //configure encoder
     eMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     eMotor.setSelectedSensorPosition(0);
   }
   
   
   public void main() {
-    //set motor safety
-    eMotor.setSafetyEnabled(true);
-    eMotor.setExpiration(0.5);
+
     int actual_position = eMotor.getSelectedSensorPosition();
 
     //send data to smartdashboard
@@ -42,25 +45,25 @@ public class Elevator {
     SmartDashboard.putNumber("Elevator Encoder", actual_position);
 
     //print statements
-    if (controller.getBumperPressed(rightHand)) {
+    if (controller2.getBumperPressed(rightHand)) {
       System.out.println("RIGHT BUMPER PRESSED - ELEVATOR GOING UP!");
     }
-    else if (controller.getBumperPressed(leftHand)) {
+    else if (controller2.getBumperPressed(leftHand)) {
       System.out.println("LEFT BUMPER PRESSED - ELEVATOR GOING DOWN!");
     }
 
     //scan for bumpers being pressed to drive the motors
-    if (controller.getBumper(rightHand)) {
+    if (controller2.getBumper(rightHand)) {
       eMotor.set(-1);
     }
-    else if (controller.getBumper(leftHand)) {
+    else if (controller2.getBumper(leftHand)) {
       eMotor.set(1);
     }
-    else if (controller.getBumperReleased(rightHand)) {
+    else if (controller2.getBumperReleased(rightHand)) {
       System.out.println("RIGHT BUMPER RELEASED!");
       eMotor.set(-0.07);
     }
-    else if (controller.getBumperReleased(leftHand)) {
+    else if (controller2.getBumperReleased(leftHand)) {
       System.out.println("LEFT BUMPER RELEASED!");
       eMotor.set(-0.07);
     }
