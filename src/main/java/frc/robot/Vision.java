@@ -12,9 +12,14 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
 import frc.robot.Drivetrain;
+import frc.robot.Elevator;
+
 import edu.wpi.first.wpilibj.XboxController;
 
 public class Vision {
+
+    Elevator elevator = new Elevator();
+
     private NetworkTableEntry tapeDetected, tapeDistance, tapeYaw;
     NetworkTableInstance instance = NetworkTableInstance.getDefault();
     NetworkTable vision = instance.getTable("Vision");
@@ -41,6 +46,8 @@ public class Vision {
     public void assist_vision() {
         NetworkTableEntry tapeDetected = vision.getEntry("tapeDetected");
         NetworkTableEntry tapeYaw = vision.getEntry("tapeYaw");
+        NetworkTableEntry tapePitch = vision.getEntry("tapePitch");
+
         if((tapeDetected.getBoolean(true)) && (controller.getBButton())) {
             if(tapeYaw.getDouble(0) < -2) {
                 mecanumDrivetrain.driveRight();
@@ -48,6 +55,19 @@ public class Vision {
             else if (tapeYaw.getDouble(0) > 2) {
                 mecanumDrivetrain.driveLeft();
             }
+
+            // elevator
+            if(tapePitch.getDouble(0) < -1) {
+                elevator.up();
+            } 
+            else if (tapePitch.getDouble(0) > 1) {
+                elevator.down();
+            }
+
         }
+       
     }
-}
+    }
+
+
+

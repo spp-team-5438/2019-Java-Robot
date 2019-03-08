@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
@@ -14,7 +16,6 @@ import frc.robot.Arm;
 import frc.robot.Elevator;
 import frc.robot.Autonomous;
 import frc.robot.Vision;
-//import frc.robot.NavX;
 
 
 public class Robot extends TimedRobot {
@@ -25,19 +26,23 @@ public class Robot extends TimedRobot {
   Arm arm = new Arm();
   Elevator elevator = new Elevator();
   Autonomous auto = new Autonomous();
-  //NavX gyro = new NavX();
   Vision vision = new Vision();
+
+  //define controller
+  public static XboxController controller = new XboxController(0);
+  double dPadXAxis = controller.getRawAxis(5);
+  double dPadYAxis = controller.getRawAxis(6);
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    //gyro.init();
   }
 
   //run when the robot enters operator control:
   @Override
   public void teleopInit() {
     mecanumDrivetrain.init();
+    elevator.init();
   }
 
   //run periodically when the operator is in control:
@@ -47,21 +52,33 @@ public class Robot extends TimedRobot {
     pneumatics.main();
     arm.main();
     elevator.main();
+    
     //target alignment using vision tracking triggered by the driver
     vision.assist_vision();
+
+    //elevator presets
+    if (dPadYAxis == -1.0) {
+      elevator.bottom_position();
+    }
+    else if (dPadXAxis == 1.0) {
+      elevator.middle_position();
+    }
+    else if (dPadYAxis == 1.0) {
+      elevator.top_position();
+    }
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
     auto.init();
-    //auto.drive_forward(24);
+    auto.drive_forward(2);
   }
 
   // run periodically when the robot is in autonomous mode:
   @Override
   public void autonomousPeriodic() {
     //fully auto following based on vision targeting (ghetto limelight)
-    auto.vision_based();
+    //auto.vision_based();
   }
 }

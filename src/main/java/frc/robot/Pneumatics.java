@@ -24,8 +24,6 @@ import edu.wpi.first.wpilibj.XboxController;
     public void main() {
         //set the compressor mode to turn on when pressure low and vice-versa
         compressor.setClosedLoopControl(true);
-        if (compressor.getPressureSwitchValue()); {
-        }
 
         //set the solenoid to extend when A is pressed and retract when X is pressed
         if (controller.getAButtonPressed()) {

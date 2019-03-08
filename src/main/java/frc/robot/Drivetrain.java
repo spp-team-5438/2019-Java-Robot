@@ -44,8 +44,7 @@ public class Drivetrain {
     
     public void main() {
         //create drivetrain with controller inputs and set safety
-        mDrive.driveCartesian((controller.getRawAxis(4) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * 1));
-//      mDrive.driveCartesian((controller.getRawAxis(4) * -1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(0) * -1));
+        mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
 
         int leftEncoder = rearLeft.getSelectedSensorPosition();
         int rightEncoder = rearRight.getSelectedSensorPosition();
@@ -54,16 +53,14 @@ public class Drivetrain {
     }
 
     public void driveStraight() {
-        mDrive.driveCartesian(0,.25,0);
+        mDrive.drivePolar(.5,0,0);
     }
 
     public void driveRight() {
-        mDrive.driveCartesian(.5,0,0);
-        //mDrive.drivePolar(.5, -90, 0); //This is what it probably should be (unknown if thats left or right)
+        mDrive.drivePolar(.5,90,0);
     }
 
     public void driveLeft() {
-        mDrive.drivePolar(.5,180,0);
-        //mDrive.drivePolar(.5, 90, 0) This is what is probably should be (unknown if thats left or right)
+        mDrive.drivePolar(.5,-90,0);
     }
 }

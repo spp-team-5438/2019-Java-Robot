@@ -12,6 +12,8 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class Elevator {
   //define motor controller
@@ -22,17 +24,22 @@ public class Elevator {
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
 
-  dPadXAxis = controller.getRawAxis(5);
-  dPadYAxis = controller.getRawAxis(6);
-
+  public void init() {
+    eMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    eMotor.setSelectedSensorPosition(0);
+  }
+  
+  
   public void main() {
     //set motor safety
     eMotor.setSafetyEnabled(true);
     eMotor.setExpiration(0.5);
+    int actual_position = eMotor.getSelectedSensorPosition();
 
     //send data to smartdashboard
     double eMotorspeed = eMotor.getMotorOutputPercent();
     SmartDashboard.putNumber("Elevator Speed", eMotorspeed);
+    SmartDashboard.putNumber("Elevator Encoder", actual_position);
 
     //print statements
     if (controller.getBumperPressed(rightHand)) {
@@ -62,18 +69,34 @@ public class Elevator {
     }
   }
 
+  //Encoder present positions
+  int encoderBottomPosition = 0;
+  int encoderMiddlePosition = 200;
+  int encoderTopPosition = 400;
+
+  public void up(){
+    eMotor.set(-1);
+  }
+  
+  public void down(){
+    eMotor.set(1);
+  }
+
   public void bottom_position() {
-    if (dPadYAxis == -1) {
-
-
-      //eMotor.set(ControlMode.Position, encodercount)
-    }
+    int actual_position = eMotor.getSelectedSensorPosition();
+    int gotoBottomPos = (encoderBottomPosition + (-1*actual_position));
+    eMotor.set(ControlMode.Position, gotoBottomPos);
   }
 
   public void middle_position() {
-
+    int actual_position = eMotor.getSelectedSensorPosition();
+    int gotoMiddlePos = (encoderMiddlePosition + (-1*actual_position));
+    eMotor.set(ControlMode.Position, gotoMiddlePos);
   }
 
-
-
+  public void top_position() {
+      int actual_position = eMotor.getSelectedSensorPosition();
+      int gotoTopPos = (encoderTopPosition + (-1*actual_position));
+      eMotor.set(ControlMode.Position, gotoTopPos);
+  }
 }

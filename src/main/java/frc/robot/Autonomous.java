@@ -11,7 +11,6 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import edu.wpi.first.wpilibj.VictorSP;
 
 import frc.robot.Vision;
 
@@ -33,10 +32,6 @@ public class Autonomous {
     Vision vision = new Vision();
 
     public void init() {
-
-
-
-
       rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
       rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
       rearLeft.setSelectedSensorPosition(0);
