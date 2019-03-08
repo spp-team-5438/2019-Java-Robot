@@ -30,6 +30,7 @@ public class Robot extends TimedRobot {
 
   //define controller
   public static XboxController controller = new XboxController(0);
+  public static XboxController controller2 = new XboxController(1);
   double dPadXAxis = controller.getRawAxis(5);
   double dPadYAxis = controller.getRawAxis(6);
 
@@ -56,16 +57,26 @@ public class Robot extends TimedRobot {
     //target alignment using vision tracking triggered by the driver
     vision.assist_vision();
 
-    //elevator presets
-    if (dPadYAxis == -1.0) {
+    if (controller2.getAButton()) {
       elevator.bottom_position();
     }
-    else if (dPadXAxis == 1.0) {
+    else if (controller2.getXButton()) {
       elevator.middle_position();
     }
-    else if (dPadYAxis == 1.0) {
+    else if (controller2.getYButton()) {
       elevator.top_position();
     }
+
+    //elevator presets with dpad
+    // if (dPadYAxis == -1.0) {
+    //   elevator.bottom_position();
+    // }
+    // else if (dPadXAxis == 1.0) {
+    //   elevator.middle_position();
+    // }
+    // else if (dPadYAxis == 1.0) {
+    //   elevator.top_position();
+    // }
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:

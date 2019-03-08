@@ -25,6 +25,7 @@ public class Vision {
     NetworkTable vision = instance.getTable("Vision");
     Drivetrain mecanumDrivetrain = new Drivetrain();
     XboxController controller = new XboxController(0);
+    XboxController controller2 = new XboxController(1);
 
     public void auto_vision() {
         NetworkTableEntry tapeDetected = vision.getEntry("tapeDetected");
@@ -48,26 +49,23 @@ public class Vision {
         NetworkTableEntry tapeYaw = vision.getEntry("tapeYaw");
         NetworkTableEntry tapePitch = vision.getEntry("tapePitch");
 
-        if((tapeDetected.getBoolean(true)) && (controller.getBButton())) {
+        if((tapeDetected.getBoolean(true)) && (controller2.getBButton())) {
             if(tapeYaw.getDouble(0) < -2) {
                 mecanumDrivetrain.driveRight();
             } 
             else if (tapeYaw.getDouble(0) > 2) {
                 mecanumDrivetrain.driveLeft();
             }
-
-            // elevator
-            if(tapePitch.getDouble(0) < -1) {
+            else if (tapePitch.getDouble(0) < -1) {
                 elevator.up();
             } 
             else if (tapePitch.getDouble(0) > 1) {
                 elevator.down();
             }
-
         }
        
     }
-    }
+}
 
 
 

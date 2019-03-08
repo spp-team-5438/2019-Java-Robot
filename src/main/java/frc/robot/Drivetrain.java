@@ -20,9 +20,7 @@ public class Drivetrain {
     public static int rearLeftnum = 1;
     public static int rearRightnum = 3;
 
-    //create speedcontroller entries for talons
-    // public static VictorSP frontLeft = new VictorSP(8);
-    // public static VictorSP frontRight = new VictorSP(9);
+    //define controllers
     public static WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);
     public static WPI_VictorSPX frontRight = new WPI_VictorSPX(5);    
     public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
