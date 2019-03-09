@@ -56,7 +56,8 @@ public class Vision {
             else if (tapeYaw.getDouble(0) > 2) {
                 mecanumDrivetrain.driveLeft();
             }
-            else if (tapePitch.getDouble(0) < -1) {
+            
+            if (tapePitch.getDouble(0) < -1) {
                 elevator.up();
             } 
             else if (tapePitch.getDouble(0) > 1) {
