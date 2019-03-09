@@ -52,7 +52,7 @@ public class Elevator {
       System.out.println("LEFT BUMPER PRESSED - ELEVATOR GOING DOWN!");
     }
 
-    //scan for bumpers being pressed to drive the motors
+    //scan for bumpers being pressed to drive the motor
     if (controller2.getBumper(rightHand)) {
       eMotor.set(-1);
     }

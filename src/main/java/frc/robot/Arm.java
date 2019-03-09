@@ -40,11 +40,11 @@ public class Arm {
 
         //conditionals for operating the intake motor with bumpers
         if (controller.getBumper(rightHand)) {
-            armMotor.set(0.5);
+            armMotor.set(-0.5);
             System.out.println("Intaking...");
           }
           else if (controller.getBumper(leftHand)) {
-            armMotor.set(-0.5);
+            armMotor.set(0.5);
             System.out.println("Expelling...");
           }
           else if (controller.getBumperReleased(rightHand)) {
