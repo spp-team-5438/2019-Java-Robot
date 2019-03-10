@@ -33,9 +33,9 @@ public class Vision {
         NetworkTableEntry tapeYaw = vision.getEntry("tapeYaw");
         if(tapeDetected.getBoolean(true)) {
             if(tapeDistance.getDouble(0) < 50) {
-                if(tapeYaw.getDouble(0) < -1) {
+                if(tapeYaw.getDouble(0) < -2) {
                     mecanumDrivetrain.driveRight();
-                } else if (tapeYaw.getDouble(0) > 1) {
+                } else if (tapeYaw.getDouble(0) > 2) {
                     mecanumDrivetrain.driveLeft();
                 }
             } else {
@@ -62,12 +62,12 @@ public class Vision {
                 mecanumDrivetrain.driveLeft();
             }
             
-            if (tapePitch.getDouble(0) < -1) {
-                elevator.up();
-            } 
-            else if (tapePitch.getDouble(0) > 1) {
-                elevator.down();
-            }
+            // if (tapePitch.getDouble(0) < -1) {
+            //     elevator.up();
+            // } 
+            // else if (tapePitch.getDouble(0) > 1) {
+            //     elevator.down();
+            // }
         }
        
     }

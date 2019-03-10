@@ -38,7 +38,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     mecanumDrivetrain.init();
-    elevator.init();
+    //elevator.init();
   }
 
   //run when the robot enters operator control:
@@ -58,24 +58,13 @@ public class Robot extends TimedRobot {
     //target alignment using vision tracking triggered by the driver
     vision.assist_vision();
 
-    if (controller2.getAButton()) {
-      elevator.bottom_position();
-    }
-    else if (controller2.getXButton()) {
-      elevator.middle_position();
-    }
-    else if (controller2.getYButton()) {
-      elevator.top_position();
-    }
-
-    //elevator presets with dpad
-    // if (dPadYAxis == -1.0) {
+    // if (controller2.getAButton()) {
     //   elevator.bottom_position();
     // }
-    // else if (dPadXAxis == 1.0) {
+    // else if (controller2.getXButton()) {
     //   elevator.middle_position();
     // }
-    // else if (dPadYAxis == 1.0) {
+    // else if (controller2.getYButton()) {
     //   elevator.top_position();
     // }
 }

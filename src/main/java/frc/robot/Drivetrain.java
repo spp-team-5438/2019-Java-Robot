@@ -13,6 +13,8 @@ import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import edu.wpi.first.wpilibj.GenericHID.Hand;
+import edu.wpi.first.wpilibj.GenericHID;
 
 public class Drivetrain {
 
@@ -28,6 +30,8 @@ public class Drivetrain {
 
     //create mecanum drive
     public static MecanumDrive mDrive = new MecanumDrive(frontLeft, rearLeft, frontRight, rearRight);
+    Hand leftHand = GenericHID.Hand.kLeft;
+    Hand rightHand = GenericHID.Hand.kRight;
 
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
@@ -42,8 +46,21 @@ public class Drivetrain {
     }
     
     public void main() {
-        //create drivetrain with controller inputs and set safety
-        mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
+        
+        if (controller.getTriggerAxis(rightHand) > 0) {
+            mDrive.driveCartesian((controller.getRawAxis(0) * 0.5), (controller.getRawAxis(1) * -0.5), (controller.getRawAxis(4) * 0.5));
+            System.out.println("HALF SPEED!");
+        }
+        else if (controller.getTriggerAxis(leftHand) > 0) {
+            mDrive.driveCartesian((controller.getRawAxis(0) * 0.25), (controller.getRawAxis(1) * -0.25), (controller.getRawAxis(4) * 0.25));
+            System.out.println("QUARTER SPEED");
+        }
+        else {
+            mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
+        }
+        
+        
+        //mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
 
         //send encoder values to smartdashboard
         int leftEncoder = rearLeft.getSelectedSensorPosition();
