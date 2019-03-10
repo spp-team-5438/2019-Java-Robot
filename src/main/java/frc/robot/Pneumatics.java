@@ -27,7 +27,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
         //set the solenoid to extend when A is pressed and retract when X is pressed
         if (controller.getAButtonPressed()) {
-            solenoid.set(Value.kForward);
+            solenoid.set(Value.kForward);  
             System.out.println("Extending Solenoid!");
         }
         else if (controller.getXButtonPressed()) {

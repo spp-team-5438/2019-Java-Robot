@@ -33,15 +33,20 @@ public class Vision {
         NetworkTableEntry tapeYaw = vision.getEntry("tapeYaw");
         if(tapeDetected.getBoolean(true)) {
             if(tapeDistance.getDouble(0) < 50) {
-                if(tapeYaw.getDouble(0) < -2) {
+                if(tapeYaw.getDouble(0) < -1) {
                     mecanumDrivetrain.driveRight();
-                } else if (tapeYaw.getDouble(0) > 2) {
+                } else if (tapeYaw.getDouble(0) > 1) {
                     mecanumDrivetrain.driveLeft();
                 }
             } else {
                 mecanumDrivetrain.driveStraight();
             }
-          }
+          } 
+          
+        //   else {
+        //     mecanumDrivetrain.driveStraight();
+        //   }
+
     }
 
     public void assist_vision() {

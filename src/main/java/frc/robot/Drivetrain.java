@@ -38,6 +38,7 @@ public class Drivetrain {
         mDrive.setExpiration(0.5);
         rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        
     }
     
     public void main() {

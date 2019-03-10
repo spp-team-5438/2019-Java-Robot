@@ -37,13 +37,14 @@ public class Robot extends TimedRobot {
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
+    mecanumDrivetrain.init();
+    elevator.init();
   }
 
   //run when the robot enters operator control:
   @Override
   public void teleopInit() {
-    mecanumDrivetrain.init();
-    elevator.init();
+    
   }
 
   //run periodically when the operator is in control:
@@ -83,7 +84,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     auto.init();
-    auto.drive_forward(2);
+    auto.vision_based();
   }
 
   // run periodically when the robot is in autonomous mode:
@@ -91,5 +92,6 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
     //fully auto following based on vision targeting (ghetto limelight)
     //auto.vision_based();
+    teleopPeriodic();
   }
 }
