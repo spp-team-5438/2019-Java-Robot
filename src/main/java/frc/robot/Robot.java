@@ -7,6 +7,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.XboxController;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
@@ -14,7 +16,6 @@ import frc.robot.Arm;
 import frc.robot.Elevator;
 import frc.robot.Autonomous;
 import frc.robot.Vision;
-//import frc.robot.NavX;
 
 
 public class Robot extends TimedRobot {
@@ -25,20 +26,25 @@ public class Robot extends TimedRobot {
   Arm arm = new Arm();
   Elevator elevator = new Elevator();
   Autonomous auto = new Autonomous();
-  //NavX gyro = new NavX();
   Vision vision = new Vision();
+
+  //define controller
+  public static XboxController controller = new XboxController(0);
+  public static XboxController controller2 = new XboxController(1);
+  double dPadXAxis = controller.getRawAxis(5);
+  double dPadYAxis = controller.getRawAxis(6);
 
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    auto.init();
-    //gyro.init();
+    mecanumDrivetrain.init();
+    //elevator.init();
   }
 
   //run when the robot enters operator control:
   @Override
   public void teleopInit() {
-    mecanumDrivetrain.init();
+    
   }
 
   //run periodically when the operator is in control:
@@ -48,19 +54,33 @@ public class Robot extends TimedRobot {
     pneumatics.main();
     arm.main();
     elevator.main();
+    
     //target alignment using vision tracking triggered by the driver
-    vision.assist_vision(); 
+    vision.assist_vision();
+
+    // if (controller2.getAButton()) {
+    //   elevator.bottom_position();
+    // }
+    // else if (controller2.getXButton()) {
+    //   elevator.middle_position();
+    // }
+    // else if (controller2.getYButton()) {
+    //   elevator.top_position();
+    // }
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
+    auto.init();
+    //auto.vision_based();
   }
 
   // run periodically when the robot is in autonomous mode:
   @Override
   public void autonomousPeriodic() {
     //fully auto following based on vision targeting (ghetto limelight)
-    auto.vision_based(); 
+    //auto.vision_based();
+    teleopPeriodic();
   }
 }
