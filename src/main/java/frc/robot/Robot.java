@@ -73,7 +73,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     auto.init();
-    auto.vision_based();
+    //auto.vision_based();
   }
 
   // run periodically when the robot is in autonomous mode:
