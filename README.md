@@ -2,7 +2,18 @@
 Saint Peter's Prep Team 5438
 FRC 2019 Deep Space
 
-# Basic To-Do
+# To-do for week 3
+- [ ] Hatch penumatic grabber
+- [ ] add 2nd solenoid and 3rd air tank
+- [ ] Driver station assembly
+- [ ] Full screen normal camera feed
+- [ ] fine tune vision recognition (2-3 inch offset to the right currently?)
+- [ ] fix elevator to go to level 3
+- [ ] extend wiring for level 3 (if needed)
+- [ ] tighten elevator and control board back down
+- [ ] more bumper support?
+
+# To-Do (basic)
 - [x] Write Drivetrain Code
 - [x] Test and Finalize Drivetrain
 - [x] Write Elevator Code
@@ -10,24 +21,12 @@ FRC 2019 Deep Space
 - [x] Write Arm Code
 - [x] Write Pneumatics Code
 - [x] Test and Finalize Pneumatics
-- [x] Write Camera Code (display camera on SmartDashboard)
+- [x] Write Camera Code (display camera on Shuffleboard)
 
-# Complex To-Do
-- [ ] Integrate encoder in elevator for preset heights
+# To-Do (complex)
+- [ ] Integrate encoder in elevator for preset heights (thank you andymark very cool)
 - [x] Integrate a vision recognition system
 - [x] Vision following (similar to limelight)
 - [x] Vision driver assistance when a button is pressed
-- [ ] Tune vision system for camera YAW offset
-- [ ] autonomous? (see below; WIP)
-
-# Auto Plan
-- Drive forward x feet
-- Turn 90 degrees by rotating left and right sides a quarter turn moving opposite sides
-- Drive forward x feet
-- Use .set(.5) for intake; timer.delay; then .set(0) to make intake motor spin for a certain amount of time
-
-# To-do (non-programming)
-- [ ] mount camera
-- [ ] swap front motor controllers to Victor SPX for ability to use .follow()
-- [ ] finish intake and mount to robot
-- [ ] connect elevator encoder to talon
+- [x] Tune vision system for camera YAW offset
+- [x] autonomous? (edit: yes, vision based) (see below; WIP)
