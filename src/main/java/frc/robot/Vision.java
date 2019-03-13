@@ -27,6 +27,7 @@ public class Vision {
     XboxController controller = new XboxController(0);
     XboxController controller2 = new XboxController(1);
 
+    
     public void auto_vision() {
         NetworkTableEntry tapeDetected = vision.getEntry("tapeDetected");
         NetworkTableEntry tapeDistance = vision.getEntry("tapeDistance");
@@ -55,22 +56,33 @@ public class Vision {
         NetworkTableEntry tapePitch = vision.getEntry("tapePitch");
 
         if((tapeDetected.getBoolean(true)) && (controller2.getBButton())) {
-            if(tapeYaw.getDouble(0) < -1) {
-                mecanumDrivetrain.driveRight();
-            } 
-            else if (tapeYaw.getDouble(0) > 1) {
-                mecanumDrivetrain.driveLeft();
+            // if(tapeYaw.getDouble(0) < -1) {
+            //     mecanumDrivetrain.rotateLeft();
+            // } 
+            // else if (tapeYaw.getDouble(0) > 1) {
+            //     mecanumDrivetrain.rotateRight();
+            // }
+            double targetAngle = tapeYaw.getDouble(0);
+            if (targetAngle < 0) {
+                mecanumDrivetrain.differential(-.4);
+            } else if (targetAngle > 1.5){
+                mecanumDrivetrain.differential(.4);
+            } else {
+                mecanumDrivetrain.differential(0);
             }
             
-            if (tapePitch.getDouble(0) < -1) {
-                elevator.up();
-            } 
-            else if (tapePitch.getDouble(0) > 1) {
-                elevator.down();
-            }
+            // if (tapePitch.getDouble(0) < -1) {
+            //     elevator.up();
+            // } 
+            // else if (tapePitch.getDouble(0) > 1) {
+            //     elevator.down();
+            // }
         }
-       
+    
+        
     }
+
+   
 }
 
 

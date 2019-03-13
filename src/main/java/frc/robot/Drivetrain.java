@@ -16,6 +16,10 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID;
 
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
+
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 public class Drivetrain {
 
     //define numbers of talons
@@ -33,8 +37,14 @@ public class Drivetrain {
     Hand leftHand = GenericHID.Hand.kLeft;
     Hand rightHand = GenericHID.Hand.kRight;
 
+    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
+    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
+
+    public DifferentialDrive dDrive = new DifferentialDrive(left, right);
+
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
+
 
     public void init() {
         mDrive.setDeadband(0);
@@ -43,6 +53,10 @@ public class Drivetrain {
         rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         
+
+        dDrive.setDeadband(0);
+        dDrive.setSafetyEnabled(true);
+        dDrive.setExpiration(0.5);
     }
     
     public void main() {
@@ -74,10 +88,31 @@ public class Drivetrain {
     }
 
     public void driveRight() {
-        mDrive.drivePolar(.5,90,0);
+        mDrive.drivePolar(.3,90,0);
     }
 
     public void driveLeft() {
-        mDrive.drivePolar(.5,-90,0);
+        mDrive.drivePolar(.3,-90,0);
+    }
+
+    // public void rotateAlign(double leftSpeed, double rightSpeed){
+    //     frontLeft.set(leftSpeed);
+    //     rearLeft.set(leftSpeed);
+    //     frontRight.set(rightSpeed);
+    //     rearRight.set(rightSpeed);
+    // }
+
+    // public void rotateLeft() {
+    //     rearRight.set(.3);
+    //     rearLeft.set(-.3);
+    // }
+
+    // public void rotateRight() {
+    //     rearRight.set(-.3);
+    //     rearLeft.set(.3);
+    // }
+
+    public void differential(double output) {
+        dDrive.arcadeDrive(0, output);
     }
 }
