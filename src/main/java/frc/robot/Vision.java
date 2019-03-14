@@ -63,9 +63,9 @@ public class Vision {
             //     mecanumDrivetrain.rotateRight();
             // }
             double targetAngle = tapeYaw.getDouble(0);
-            if (targetAngle < 0) {
+            if (targetAngle < 1.5) {
                 mecanumDrivetrain.differential(-.4);
-            } else if (targetAngle > 1.5){
+            } else if (targetAngle > 2){
                 mecanumDrivetrain.differential(.4);
             } else {
                 mecanumDrivetrain.differential(0);
