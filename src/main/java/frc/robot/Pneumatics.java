@@ -15,9 +15,8 @@ import edu.wpi.first.wpilibj.XboxController;
  public class Pneumatics {
 
     //define solenoids and compressor
-    DoubleSolenoid solenoidPush = new DoubleSolenoid(3, 0);
-    //DoubleSolenoid solenoidPush = new DoubleSolenoid(0, 1);
-    //DoubleSolenoid solenoidHook = new DoubleSolenoid(2, 3);
+    DoubleSolenoid solenoidPush = new DoubleSolenoid(0, 1);
+    DoubleSolenoid solenoidHook = new DoubleSolenoid(2, 3);
     Compressor compressor = new Compressor();
 
     //define controller
@@ -29,7 +28,7 @@ import edu.wpi.first.wpilibj.XboxController;
 
         //set the solenoid to extend when A is pressed and retract when X is pressed
         if (controller.getAButtonPressed()) {
-            solenoidPush.set(Value.kForward);  
+            solenoidPush.set(Value.kForward);
             System.out.println("Extending Solenoid!");
         }
         else if (controller.getXButtonPressed()) {
@@ -40,22 +39,21 @@ import edu.wpi.first.wpilibj.XboxController;
             solenoidPush.set(Value.kOff);
         }
 
-        //set the hook to flip up/down using controller button B as a toggle
-        // int count = 0;
-        // boolean isEven = (count % 2 == 0);
-        
-        // if ((controller.getBButtonPressed() && (isEven == true))) {
-        //     solenoidHook.set(Value.kForward);
-        //     System.out.println("Hook down!");
-        //     count++;
-        // }
-        // else if ((controller.getBButtonPressed() && (isEven == false))) {
-        //     solenoidHook.set(Value.kReverse);
-        //     System.out.println("Hook up!");
-        //     count++;
-        // }
-        // else {
-        //     solenoidHook.set(Value.kOff);
-        // }
+        set the hook to flip up/down using controller button B as a toggle
+        boolean toggle = true;
+
+        if ((controller.getBButtonPressed() && (toggle == true))) {
+            solenoidHook.set(Value.kForward);
+            System.out.println("Hook down!");
+            toggle = false;
+        }
+        else if ((controller.getBButtonPressed() && (toggle == false))) {
+            solenoidHook.set(Value.kReverse);
+            System.out.println("Hook up!");
+            toggle = true;
+        }
+        else {
+            solenoidHook.set(Value.kOff);
+        }
     }
 }

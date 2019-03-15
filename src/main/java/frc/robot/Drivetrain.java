@@ -28,7 +28,7 @@ public class Drivetrain {
 
     //define controllers
     public static WPI_VictorSPX frontLeft = new WPI_VictorSPX(6);
-    public static WPI_VictorSPX frontRight = new WPI_VictorSPX(5);    
+    public static WPI_VictorSPX frontRight = new WPI_VictorSPX(5);
     public static WPI_TalonSRX rearLeft = new WPI_TalonSRX(rearLeftnum);
     public static WPI_TalonSRX rearRight = new WPI_TalonSRX(rearRightnum);
 
@@ -50,30 +50,27 @@ public class Drivetrain {
         mDrive.setDeadband(0);
         mDrive.setSafetyEnabled(true);
         mDrive.setExpiration(0.5);
-        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-        
-
-        dDrive.setDeadband(0);
         dDrive.setSafetyEnabled(true);
         dDrive.setExpiration(0.5);
+        rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+        rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
-    
+
     public void main() {
-        
+
         if (controller.getTriggerAxis(rightHand) > 0) {
             mDrive.driveCartesian((controller.getRawAxis(0) * 0.5), (controller.getRawAxis(1) * -0.5), (controller.getRawAxis(4) * 0.5));
-            System.out.println("HALF SPEED!");
+            //System.out.println("HALF SPEED!");
         }
         else if (controller.getTriggerAxis(leftHand) > 0) {
             mDrive.driveCartesian((controller.getRawAxis(0) * 0.25), (controller.getRawAxis(1) * -0.25), (controller.getRawAxis(4) * 0.25));
-            System.out.println("QUARTER SPEED");
+            //System.out.println("QUARTER SPEED");
         }
         else {
             mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
         }
-        
-        
+
+
         //mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
 
         //send encoder values to smartdashboard

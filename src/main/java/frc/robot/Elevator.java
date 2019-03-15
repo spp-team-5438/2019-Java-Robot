@@ -28,13 +28,13 @@ public class Elevator {
     //set motor safety
     eMotor.setSafetyEnabled(true);
     eMotor.setExpiration(0.5);
-    
+
     //configure encoder
-    eMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
-    eMotor.setSelectedSensorPosition(0);
+    // eMotor.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    // eMotor.setSelectedSensorPosition(0);
   }
-  
-  
+
+
   public void main() {
 
     int actual_position = eMotor.getSelectedSensorPosition();
@@ -80,7 +80,7 @@ public class Elevator {
   public void up(){
     eMotor.set(-1);
   }
-  
+
   public void down(){
     eMotor.set(1);
   }

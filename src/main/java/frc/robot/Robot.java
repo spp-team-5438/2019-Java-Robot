@@ -17,13 +17,12 @@ import frc.robot.Elevator;
 import frc.robot.Autonomous;
 import frc.robot.Vision;
 
-
 public class Robot extends TimedRobot {
 
   //define all other classes
   Drivetrain mecanumDrivetrain = new Drivetrain();
   Pneumatics pneumatics = new Pneumatics();
-  Arm arm = new Arm();
+  //Arm arm = new Arm();
   Elevator elevator = new Elevator();
   Autonomous auto = new Autonomous();
   Vision vision = new Vision();
@@ -37,14 +36,13 @@ public class Robot extends TimedRobot {
   //run when the robot is starting up; initialization code is placed here:
   @Override
   public void robotInit() {
-    mecanumDrivetrain.init();
-    //elevator.init();
   }
 
   //run when the robot enters operator control:
   @Override
   public void teleopInit() {
-    
+    mecanumDrivetrain.init();
+    elevator.init();
   }
 
   //run periodically when the operator is in control:
@@ -52,9 +50,9 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
     mecanumDrivetrain.main();
     pneumatics.main();
-    arm.main();
+    //arm.main();
     elevator.main();
-    
+
     //target alignment using vision tracking triggered by the driver
     vision.assist_vision();
 
