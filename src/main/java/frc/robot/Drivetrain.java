@@ -108,8 +108,4 @@ public class Drivetrain {
     //     rearRight.set(-.3);
     //     rearLeft.set(.3);
     // }
-
-    public void differential(double output) {
-        dDrive.arcadeDrive(0, output);
-    }
 }

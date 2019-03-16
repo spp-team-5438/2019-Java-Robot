@@ -15,6 +15,7 @@ import frc.robot.Drivetrain;
 import frc.robot.Elevator;
 
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Vision {
 
@@ -26,6 +27,10 @@ public class Vision {
     Drivetrain mecanumDrivetrain = new Drivetrain();
     XboxController controller = new XboxController(0);
     XboxController controller2 = new XboxController(1);
+
+    public void init() {
+        
+    }
 
     
     public void auto_vision() {
@@ -63,12 +68,13 @@ public class Vision {
             //     mecanumDrivetrain.rotateRight();
             // }
             double targetAngle = tapeYaw.getDouble(0);
-            if (targetAngle < 1.5) {
-                mecanumDrivetrain.differential(-.4);
-            } else if (targetAngle > 2){
-                mecanumDrivetrain.differential(.4);
+            if (targetAngle < .5) {
+                //mecanumDrivetrain.differential(-.4);
+                mecanumDrivetrain.dDrive.arcadeDrive(0, -.35);
+            } else if (targetAngle > 1){
+                mecanumDrivetrain.dDrive.arcadeDrive(0, .35);
             } else {
-                mecanumDrivetrain.differential(0);
+                mecanumDrivetrain.dDrive.arcadeDrive(0, 0);
             }
             
             // if (tapePitch.getDouble(0) < -1) {

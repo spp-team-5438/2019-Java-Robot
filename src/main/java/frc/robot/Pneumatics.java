@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.XboxController;
  public class Pneumatics {
 
     //define solenoids and compressor
-    DoubleSolenoid solenoidPush = new DoubleSolenoid(0, 1);
+    DoubleSolenoid solenoidPush = new DoubleSolenoid(1, 0);
     DoubleSolenoid solenoidHook = new DoubleSolenoid(2, 3);
     Compressor compressor = new Compressor();
 
@@ -39,21 +39,18 @@ import edu.wpi.first.wpilibj.XboxController;
             solenoidPush.set(Value.kOff);
         }
 
-        set the hook to flip up/down using controller button B as a toggle
-        boolean toggle = true;
-
-        if ((controller.getBButtonPressed() && (toggle == true))) {
+        //set the hook to flip up/down using controller button B as a toggle
+        if (controller.getBButtonPressed()) {
             solenoidHook.set(Value.kForward);
-            System.out.println("Hook down!");
-            toggle = false;
+            System.out.println("Extending Hook!");
         }
-        else if ((controller.getBButtonPressed() && (toggle == false))) {
+        else if (controller.getYButtonPressed()) {
             solenoidHook.set(Value.kReverse);
-            System.out.println("Hook up!");
-            toggle = true;
+            System.out.println("Retracting Hook!");
         }
         else {
             solenoidHook.set(Value.kOff);
         }
+
     }
 }
