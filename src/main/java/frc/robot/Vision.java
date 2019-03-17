@@ -29,10 +29,10 @@ public class Vision {
     XboxController controller2 = new XboxController(1);
 
     public void init() {
-        
+
     }
 
-    
+
     public void auto_vision() {
         NetworkTableEntry tapeDetected = vision.getEntry("tapeDetected");
         NetworkTableEntry tapeDistance = vision.getEntry("tapeDistance");
@@ -47,8 +47,8 @@ public class Vision {
             } else {
                 mecanumDrivetrain.driveStraight();
             }
-          } 
-          
+          }
+
         //   else {
         //     mecanumDrivetrain.driveStraight();
         //   }
@@ -60,36 +60,58 @@ public class Vision {
         NetworkTableEntry tapeYaw = vision.getEntry("tapeYaw");
         NetworkTableEntry tapePitch = vision.getEntry("tapePitch");
 
+        double kP = 1.2;
+
         if((tapeDetected.getBoolean(true)) && (controller2.getBButton())) {
             // if(tapeYaw.getDouble(0) < -1) {
             //     mecanumDrivetrain.rotateLeft();
-            // } 
+            // }
             // else if (tapeYaw.getDouble(0) > 1) {
             //     mecanumDrivetrain.rotateRight();
             // }
             double targetAngle = tapeYaw.getDouble(0);
-            if (targetAngle < .5) {
-                //mecanumDrivetrain.differential(-.4);
-                mecanumDrivetrain.dDrive.arcadeDrive(0, -.35);
-            } else if (targetAngle > 1){
-                mecanumDrivetrain.dDrive.arcadeDrive(0, .35);
-            } else {
-                mecanumDrivetrain.dDrive.arcadeDrive(0, 0);
-            }
-            
+            double output = limitOutput(-kP * targetAngle, 0.3);
+            mDrive.driveCartesian(0,0,output);
+            // if (targetAngle < .5) {
+            //     //mecanumDrivetrain.differential(-.4);
+            //     // mecanumDrivetrain.dDrive.arcadeDrive(0, -.35);
+            //     mDrive.driveCartesian(0,0,-.35)
+            // } else if (targetAngle > 1){
+            //     // mecanumDrivetrain.dDrive.arcadeDrive(0, .35);
+            //     mDrive.driveCartesian(0,0,.35)
+            //
+            // } else {
+            //     // mecanumDrivetrain.dDrive.arcadeDrive(0, 0);
+            // }
+
             // if (tapePitch.getDouble(0) < -1) {
             //     elevator.up();
-            // } 
+            // }
             // else if (tapePitch.getDouble(0) > 1) {
             //     elevator.down();
             // }
         }
-    
-        
+
+
     }
 
-   
+    public double limitOutput(double number, double maxOutput) {
+        if (number > 1.0) {
+            number = 1.0;
+        }
+        if (number < -1.0) {
+            number = -1.0;
+        }
+
+        if (number > maxOutput) {
+            return maxOutput;
+        }
+        if (number < -maxOutput) {
+            return -maxOutput;
+        }
+
+        return number;
+    }
+
+
 }
-
-
-
