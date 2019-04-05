@@ -14,8 +14,6 @@ import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
 import frc.robot.Arm;
 import frc.robot.Elevator;
-import frc.robot.Autonomous;
-import frc.robot.Vision;
 
 public class Robot extends TimedRobot {
 
@@ -24,8 +22,8 @@ public class Robot extends TimedRobot {
   Pneumatics pneumatics = new Pneumatics();
   //Arm arm = new Arm();
   Elevator elevator = new Elevator();
-  Autonomous auto = new Autonomous();
-  Vision vision = new Vision();
+  //Autonomous auto = new Autonomous();
+  //Vision vision = new Vision();
 
   //define controller
   public static XboxController controller = new XboxController(0);
@@ -52,33 +50,16 @@ public class Robot extends TimedRobot {
     pneumatics.main();
     //arm.main();
     elevator.main();
-
-    //target alignment using vision tracking triggered by the driver
-    vision.assist_vision();
-
-    // if (controller2.getAButton()) {
-    //   elevator.bottom_position();
-    // }
-    // else if (controller2.getXButton()) {
-    //   elevator.middle_position();
-    // }
-    // else if (controller2.getYButton()) {
-    //   elevator.top_position();
-    // }
 }
 
   //run when robot enters autonomous mode; initializtion for autonomous should be placed here:
   @Override
   public void autonomousInit() {
-    auto.init();
-    //auto.vision_based();
   }
 
   // run periodically when the robot is in autonomous mode:
   @Override
   public void autonomousPeriodic() {
-    //fully auto following based on vision targeting (ghetto limelight)
-    //auto.vision_based();
     teleopPeriodic();
   }
 }

@@ -16,10 +16,6 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.GenericHID;
 
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
 public class Drivetrain {
 
     //define numbers of talons
@@ -37,11 +33,6 @@ public class Drivetrain {
     Hand leftHand = GenericHID.Hand.kLeft;
     Hand rightHand = GenericHID.Hand.kRight;
 
-    SpeedControllerGroup left = new SpeedControllerGroup(frontLeft, rearLeft);
-    SpeedControllerGroup right = new SpeedControllerGroup(frontRight, rearRight);
-
-    public DifferentialDrive dDrive = new DifferentialDrive(left, right);
-
     //define xbox controller for use with mecanum drive
     public static XboxController controller = new XboxController(0);
 
@@ -50,8 +41,6 @@ public class Drivetrain {
         mDrive.setDeadband(0);
         mDrive.setSafetyEnabled(true);
         mDrive.setExpiration(0.5);
-        dDrive.setSafetyEnabled(true);
-        dDrive.setExpiration(0.5);
         rearLeft.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
         rearRight.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
     }
@@ -69,9 +58,6 @@ public class Drivetrain {
         else {
             mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
         }
-
-
-        //mDrive.driveCartesian((controller.getRawAxis(0) * 1), (controller.getRawAxis(1) * -1), (controller.getRawAxis(4) * 1));
 
         //send encoder values to smartdashboard
         int leftEncoder = rearLeft.getSelectedSensorPosition();
@@ -91,21 +77,4 @@ public class Drivetrain {
     public void driveLeft() {
         mDrive.drivePolar(.3,-90,0);
     }
-
-    // public void rotateAlign(double leftSpeed, double rightSpeed){
-    //     frontLeft.set(leftSpeed);
-    //     rearLeft.set(leftSpeed);
-    //     frontRight.set(rightSpeed);
-    //     rearRight.set(rightSpeed);
-    // }
-
-    // public void rotateLeft() {
-    //     rearRight.set(.3);
-    //     rearLeft.set(-.3);
-    // }
-
-    // public void rotateRight() {
-    //     rearRight.set(-.3);
-    //     rearLeft.set(.3);
-    // }
 }
