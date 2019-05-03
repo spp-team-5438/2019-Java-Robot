@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.GenericHID.Hand;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class Arm {
+public class Intake {
 
     //define motor controller
-    WPI_TalonSRX armMotor = new WPI_TalonSRX(2);
+    WPI_TalonSRX armMotor = new WPI_TalonSRX(4);
 
     //define controller and hands
     XboxController controller = new XboxController(0);
@@ -25,11 +25,6 @@ public class Arm {
 
     public void main() {
 
-        //get values of triggers for use
-        double leftTriggerValue = controller.getTriggerAxis(leftHand);
-        double rightTriggerValue = controller.getTriggerAxis(rightHand);
-        double correct_rightTriggerValue = (-1*rightTriggerValue);
-        
         //set motors safety
         armMotor.setSafetyEnabled(true);
         armMotor.setExpiration(0.5);
@@ -56,6 +51,13 @@ public class Arm {
           else {
             armMotor.set(0);
           }
+        
+        //OPERATION WITH TRIGGERS
+        
+        //get values of triggers for use
+        double leftTriggerValue = controller.getTriggerAxis(leftHand);
+        double rightTriggerValue = controller.getTriggerAxis(rightHand);
+        double correct_rightTriggerValue = (-1*rightTriggerValue);
         
         //if right trigger is pressed spin one way, if left is pressed spin other way
         // if (rightTriggerValue > 0) {
