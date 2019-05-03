@@ -17,7 +17,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 
 public class Elevator {
   //define motor controller
-  public static WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
+  public static WPI_TalonSRX eMotor = new WPI_TalonSRX(2);
 
   //define controller and hands
   public static XboxController controller1 = new XboxController(0);
