@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Drivetrain;
 import frc.robot.Pneumatics;
-import frc.robot.Arm;
+import frc.robot.Intake;
 import frc.robot.Elevator;
 
 public class Robot extends TimedRobot {
@@ -20,7 +20,7 @@ public class Robot extends TimedRobot {
   //define all other classes
   Drivetrain mecanumDrivetrain = new Drivetrain();
   Pneumatics pneumatics = new Pneumatics();
-  //Arm arm = new Arm();
+  Intake intake = new Intake();
   Elevator elevator = new Elevator();
   //Autonomous auto = new Autonomous();
   //Vision vision = new Vision();
@@ -41,6 +41,7 @@ public class Robot extends TimedRobot {
   public void teleopInit() {
     mecanumDrivetrain.init();
     elevator.init();
+	  intake.init();
   }
 
   //run periodically when the operator is in control:
@@ -48,7 +49,7 @@ public class Robot extends TimedRobot {
 	public void teleopPeriodic() {
     mecanumDrivetrain.main();
     pneumatics.main();
-    //arm.main();
+    intake.main();
     elevator.main();
 }
 
