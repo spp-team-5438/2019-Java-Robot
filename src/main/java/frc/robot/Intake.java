@@ -22,12 +22,14 @@ public class Intake {
     XboxController controller = new XboxController(0);
     public Hand leftHand = GenericHID.Hand.kLeft;
     public Hand rightHand = GenericHID.Hand.kRight;
-
-    public void main() {
-
+    
+    public void init() {
         //set motors safety
         armMotor.setSafetyEnabled(true);
         armMotor.setExpiration(0.5);
+    }
+
+    public void main() {
 
         //send values to smartdashbaord
         double armMotorSpeed = armMotor.getMotorOutputPercent();
