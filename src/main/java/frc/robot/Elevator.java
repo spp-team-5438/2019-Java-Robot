@@ -20,6 +20,7 @@ public class Elevator {
   public static WPI_TalonSRX eMotor = new WPI_TalonSRX(4);
 
   //define controller and hands
+  public static XboxController controller1 = new XboxController(0);
   public static XboxController controller2 = new XboxController(1);
   public Hand leftHand = GenericHID.Hand.kLeft;
   public Hand rightHand = GenericHID.Hand.kRight;
@@ -37,7 +38,7 @@ public class Elevator {
 
   public void main() {
 
-    int actual_position = eMotor.getSelectedSensorPosition();
+    //int actual_position = eMotor.getSelectedSensorPosition();
 
     //send data to smartdashboard
     double eMotorspeed = eMotor.getMotorOutputPercent();
@@ -45,18 +46,19 @@ public class Elevator {
     SmartDashboard.putNumber("Elevator Encoder", actual_position);
 
     //print statements
-    if (controller2.getBumperPressed(rightHand)) {
-      System.out.println("RIGHT BUMPER PRESSED - ELEVATOR GOING UP!");
+    if ((controller2.getBumperPressed(rightHand)) || (controller1.getRawAxis(6) == 1)) {
+      System.out.println("ELEVATOR GOING UP!");
     }
-    else if (controller2.getBumperPressed(leftHand)) {
-      System.out.println("LEFT BUMPER PRESSED - ELEVATOR GOING DOWN!");
+    else if (controller2.getBumperPressed(leftHand)) || (controller1.getRawAxis(6) == -1)) {
+      System.out.println("ELEVATOR GOING DOWN!");
     }
 
-    //scan for bumpers being pressed to drive the motor
-    if (controller2.getBumper(rightHand)) {
+    //scan for bumpers of the secondary controller being pressed to drive the motor
+    //also scan for the dpad of the primary controller to drive the motor
+    if ((controller2.getBumper(rightHand)) || (controller1.getRawAxis(6) == 1)) {
       eMotor.set(-1);
     }
-    else if (controller2.getBumper(leftHand)) {
+    else if ((controller2.getBumper(leftHand)) || (controller1.getRawAxis(6) == -1)) {
       eMotor.set(1);
     }
     else if (controller2.getBumperReleased(rightHand)) {
